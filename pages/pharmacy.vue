@@ -1,0 +1,189 @@
+<template>
+  <div>
+    <div>
+      <!-- MODALS
+    ================================================== -->
+
+      <!-- NAVIGATION
+    ================================================== -->
+
+      <nav id="sidebar" class="navbar navbar-vertical fixed-left navbar-expand-md ">
+       <Sidebar/>
+      </nav>
+      <!-- MAIN CONTENT
+    ================================================== -->
+      <div class="main-content">
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <!-- Header -->
+              <div class="header mt-md-5">
+                <div class="header-body">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <!-- Title -->
+                      <h6 class="header-pretitle">
+                        Most Popular
+                      </h6>
+                      <h1 class="header-title">
+                        Pharmacy
+                      </h1>
+                    </div>
+                  </div> <!-- / .row -->
+                  <div class="row align-items-center">
+                    <div class="col" />
+                  </div>
+                </div>
+              </div>
+              <br><br>
+              <div class="table-responsive">
+                <table class="table table-sm table-hover table-nowrap card-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">
+                        Pharmacy ID
+                      </th>
+                      <th scope="col">
+                        Name
+                      </th>
+                      <th scope="col">
+                        State
+                      </th>
+                      <th scope="col">
+                        City
+                      </th>
+                      <!-- <th scope="col">
+                        Details
+                      </th> -->
+                    </tr>
+                  </thead>
+                  <!-- <div class="spinner-border" style="width: 2rem; text-align: center; height: 2rem;" role="status">
+                                                <span v-if="isLoading" class="visually-hidden"></span>
+                                            </div> -->
+                  <tbody>
+                    <tr v-for="(responseData,index) in mostPopularPharmarcy" :key="index">
+                      <th scope="row">
+                        {{ responseData.hospitalID }}
+                      </th>
+                      <td>{{ responseData.name }}</td>
+                      <td>{{ responseData.address.state }}</td>
+                      <td>{{ responseData.address.city }}</td>
+                      <!-- <td>
+                        <button type="button" class="btn btn-primary btn-sm">
+                          View
+                        </button>
+                      </td> -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-12">
+                <!-- Header -->
+                <div class="header mt-md-5">
+                  <div class="header-body">
+                    <div class="row align-items-center">
+                      <div class="col">
+                        <h6 class="header-pretitle">
+                          Recently Added
+                        </h6>
+                        <!-- Title -->
+                        <h1 class="header-title">
+                          Pharmarcy
+                        </h1>
+                      </div>
+                    </div> <!-- / .row -->
+                    <div class="row align-items-center">
+                      <div class="col" />
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-sm table-hover table-nowrap card-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">
+                          Pharmacy ID
+                        </th>
+                        <th scope="col">
+                          Name
+                        </th>
+                        <th scope="col">
+                          State
+                        </th>
+                        <th scope="col">
+                          City
+                        </th>
+                        <!-- <th scope="col">
+                          Details
+                        </th> -->
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(responseData,index) in recentlyAddedPharmarcy" :key="index">
+                        <th scope="row">
+                          {{ index + 1 }}
+                        </th>
+                        <td>{{ responseData.name }}</td>
+                        <td>{{ responseData.address.state }}</td>
+                        <td>{{ responseData.address.city }}</td>
+                        <!-- <td>
+                          <button type="button" class="btn btn-primary btn-sm">
+                            View
+                          </button>
+                        </td> -->
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <br><br>
+              </div>
+            </div>
+          </div> <!-- / .row -->
+        </div>
+      </div> <!-- / .main-content -->
+    </div>
+  </div>
+</template>
+
+<script>
+import Sidebar from '../components/Sidebar'
+import apiService from '../api/apiservice'
+import urls from '../api/apiUrl'
+import '../assets/css/theme-dark.min.css'
+export default {
+  components: {
+    Sidebar
+  },
+  data () {
+    return {
+      isLoading: true,
+      responseDatas: [],
+      mostPopularPharmarcy: [],
+      recentlyAddedPharmarcy: []
+    }
+  },
+  async mounted () {
+    const res = await apiService.request(true, urls.PHARMACY, {}, 'GET')
+    const result = await res.json()
+    if (result.statuscode === 200) {
+      this.responseDatas = result.data
+      this.mostPopularPharmarcy = result.data.mostPopular
+      this.recentlyAddedPharmarcy = result.data.randomPicks
+      apiService.getToken(this.tokenKey)
+      console.log(result)
+    } else if (result.statuscode === 400) {
+      alert(result.message)
+      console.log(result)
+    }
+  }
+}
+</script>
+
+<style scoped>
+.main-container {
+  background: white
+}
+a {
+  color: #013c78
+}
+</style>
