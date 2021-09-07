@@ -36,7 +36,7 @@
               Password
             </label>
               </div>
-               <a to="" @click="showPassword" class="form-text small text-right">
+               <a to="" @click="showPassword()" class="form-text small text-right">
                   {{text}}
                 </a>
             </div>
@@ -104,7 +104,7 @@ export default {
         this.type = 'text'
         this.text = 'Hide Password'
       } else {
-        this.type = 'password'
+        this.type == 'password'
         this.text = 'Show Password'
       }
     }
