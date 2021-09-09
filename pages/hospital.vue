@@ -24,9 +24,15 @@
                       </h6>
                       <!-- Title -->
                       <h1 class="header-title">
-                        Hspace
+                        Hospital
                       </h1>
                     </div>
+                    <div class="col text-right"><nuxt-link to="/addhospitalbranch">
+                       <button class="btn btn-secondary">
+                         Add Hospital
+                       </button>
+                       </nuxt-link>
+                      </div>
                   </div> <!-- / .row -->
                   <div class="row align-items-center">
                     <div class="col" />
@@ -51,13 +57,19 @@
                     <th scope="col">
                       Street
                     </th>
+                    <th scope="col">
+                        Hospital Info
+                      </th>
+                      <th scope="col">
+                        Update
+                      </th>
                   </tr>
                 </thead>
                 <!-- <div class="spinner-border" style="width: 2rem; text-align: center; height: 2rem;" role="status">
                             <span v-if="isLoading" class="visually-hidden"></span>
                         </div> -->
                 <tbody>
-                  <tr v-for="(responseData,index) in sortedArray" :key="index">
+                  <tr v-for="(responseData,index) in mostPopularHospital" :key="index">
                     <th scope="row">
                       {{ index + 1 }}
                     </th>
@@ -65,6 +77,16 @@
                     <td>{{ responseData.address.state }}</td>
                     <td>{{ responseData.address.city }}</td>
                     <td>{{ responseData.address.street }}</td>
+                    <th>
+                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="details(responseData)">
+                          View
+                        </button>
+                      </th>
+                      <th>
+                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="update(responseData)">
+                          Edit
+                        </button>
+                      </th>
                   </tr>
                 </tbody>
               </table>
@@ -81,7 +103,7 @@
                       </h6>
                       <!-- Title -->
                       <h1 class="header-title">
-                        Hspace
+                        Hospital
                       </h1>
                     </div>
                   </div> <!-- / .row -->
@@ -109,10 +131,16 @@
                     <th scope="col">
                       Street
                     </th>
+                    <th scope="col">
+                        Hospital Info
+                      </th>
+                      <th scope="col">
+                        Update
+                      </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(responseData,index) in sortedArray2" :key="index">
+                  <tr v-for="(responseData,index) in recentlyAddedHospital" :key="index">
                     <th scope="row">
                       {{ index + 1 }}
                     </th>
@@ -120,6 +148,16 @@
                     <td>{{ responseData.address.state }}</td>
                     <td>{{ responseData.address.city }}</td>
                     <td>{{ responseData.address.street }}</td>
+                    <th>
+                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="details(responseData)">
+                          View
+                        </button>
+                      </th>
+                      <th>
+                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="update(responseData)">
+                          Edit
+                        </button>
+                      </th>
                   </tr>
                 </tbody>
               </table>
@@ -150,22 +188,6 @@ export default {
       searchQuery: null
     }
   },
-  computed: {
-    sortedArray () {
-      if (this.searchQuery) {
-        return this.mostPopularHospital.filter((item) => {
-          return this.searchQuery.toLowerCase().split(' ').every(v => item.name.toLowerCase().includes(v))
-        })
-      } else {
-        return this.mostPopularHospital
-      }
-    },
-    sortedArray2 () {
-      return this.recentlyAddedHospital.slice().sort(function (a, b) {
-        return (a.name > b.name) ? 1 : -1
-      })
-    }
-  },
   async mounted () {
     this.isLoading = false
     const res = await apiService.request(true, urls.HOME)
@@ -181,6 +203,35 @@ export default {
       alert(result.message)
       console.log(result)
       this.isLoading = true
+    }
+  },
+  methods: {
+    details (getData) {
+      console.log(getData.hospitalID)
+      const storeObj = {}
+      storeObj._id = getData._id
+      this.$store.commit('saveHospitalData', storeObj)
+      if (this.$store.state.hospitalInitData.hospitalID !== '') {
+        this.$router.replace('/details')
+      }
+    },
+    update (getData) {
+      console.log(getData.hospitalID)
+      const storeObj = {}
+      storeObj._id = getData._id
+      storeObj.address = getData.address
+      storeObj.services = getData.services
+      storeObj.bedSpaces = getData.bedSpaces
+      storeObj.website = getData.website
+      storeObj.category = getData.category
+      storeObj.galleryImages = getData.galleryImages
+      storeObj.parentHospital = getData.parentHospital
+      storeObj.openingHours = getData.openingHours
+      storeObj.phone = getData.phone
+      this.$store.commit('saveHospitalData', storeObj)
+      if (this.$store.state.hospitalInitData.hospitalID !== '') {
+        this.$router.replace('/updatehospital')
+      }
     }
   }
 }

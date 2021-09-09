@@ -26,22 +26,6 @@
           <div  v-bind:class="{ 'show': show }" id="sidebarCollapse" class="collapse navbar-collapse">
             <!-- Navigation -->
             <ul style="color: #013c78" class="navbar-nav">
-              <li style="color: #013c78" class="nav-item">
-                <nuxt-link
-                  to="homeadmin"
-                  class="nav-link"
-                >
-                  <i class="fe fe-file" />All Hospitals
-                </nuxt-link>
-              </li>
-              <li class="nav-item">
-                <nuxt-link
-                  to="addhospital"
-                  class="nav-link"
-                >
-                  <i class="fe fe-file" />Add Hospitals
-                </nuxt-link>
-              </li>
               <li class="nav-item">
                 <nuxt-link
                   to="/addadmin"
@@ -53,11 +37,11 @@
               </li>
               <li class="nav-item">
                 <nuxt-link
-                  to="/hspacehospitals"
+                  to="/hospital"
                   class="nav-link"
                   aria-controls="sidebarDashboards"
                 >
-                  <i class="fe fe-home" /> Hspace Hospital
+                  <i class="fe fe-home" />Hospital
                 </nuxt-link>
               </li>
               <li class="nav-item">
@@ -76,26 +60,6 @@
                   aria-controls="sidebarPages"
                 >
                   <i class="fe fe-file" />Pharmacy
-                </nuxt-link>
-              </li>
-              <li class="nav-item">
-                <nuxt-link
-                  to="/signupadmin"
-                  class="nav-link"
-                  href="#sidebarPages"
-                  aria-controls="sidebarPages"
-                >
-                  <i class="fe fe-file" /> Register Super Admin
-                </nuxt-link>
-              </li>
-              <li class="nav-item">
-                <nuxt-link
-                  to="/updateprofile"
-                  class="nav-link"
-                  href="#sidebarPages"
-                  aria-controls="sidebarPages"
-                >
-                  <i class="fe fe-file" /> Update Profile
                 </nuxt-link>
               </li>
             </ul>

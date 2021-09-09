@@ -87,7 +87,13 @@
                                     </td>
                                   </tr>
                                   <tr>
-                                  <tr v-for="(services, index) in responseDatas.services" :key="index" class="">
+                                  <tr v-if="responseDatas.bedSpaces">
+                                    <th>
+                                      AVAILABLE BEDSPACES
+                                      </th>
+                                    <td>{{ responseDatas.bedSpaces}}</td>
+                                  </tr>
+                                   <tr v-for="(services, index) in responseDatas.services" :key="index" class="">
                                     <th scope="row">
                                       SERVICE {{ index + 1 }}
                                     </th>

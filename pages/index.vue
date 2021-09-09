@@ -17,7 +17,7 @@
               Phone Number
             </label>
             <!-- Input -->
-            <input v-model="input.phone" type="text" class="form-control" placeholder="phone number">
+            <input required v-model="input.phone" type="text" class="form-control" placeholder="phone number">
           </div>
           <div class="form-group">
             <!-- Label -->
@@ -25,7 +25,7 @@
               Email Address
             </label>
             <!-- Input -->
-            <input v-model="input.email" type="email" class="form-control" placeholder="name@address.com">
+            <input v-model="input.email" required type="email" class="form-control" placeholder="name@address.com">
           </div>
           <!-- Password -->
           <div class="form-group">
@@ -36,19 +36,21 @@
               Password
             </label>
               </div>
-               <a to="" @click="showPassword()" class="form-text small text-right">
+              <div class="col-auto">
+               <a to="" @click="showPassword()" class="form-text small">
                   {{text}}
                 </a>
+              </div>
             </div>
                 <!-- Help text -->
                  <!-- Input group -->
             <div class="input-group input-group-merge">
               <!-- Input -->
-              <input v-model="input.password" class="form-control" placeholder="Enter your password">
+              <input v-model="input.password" required :type="type" class="form-control" placeholder="Enter your password">
               </div>
           </div>
           <!-- Submit -->
-          <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="signup()">
+          <button v-if="!isLoading" type="submit" class="btn btn-lg btn-block btn-primary mb-3" @click="signup()">
             Sign up
           </button>
           <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="signup()">
@@ -104,7 +106,7 @@ export default {
         this.type = 'text'
         this.text = 'Hide Password'
       } else {
-        this.type == 'password'
+        this.type = 'password'
         this.text = 'Show Password'
       }
     }

@@ -90,7 +90,7 @@ export default {
         this.isLoading = false
         console.log(result)
         console.log('this is' + apiService.getToken())
-        this.$router.replace('/homeadmin')
+        this.$router.replace('/addhospital')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)

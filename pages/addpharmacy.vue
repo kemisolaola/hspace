@@ -26,7 +26,7 @@
 
                       <!-- Title -->
                       <h1 class="header-title">
-                        Hospital
+                        Pharmacy
                       </h1>
                     </div>
                   </div> <!-- / .row -->
@@ -151,21 +151,6 @@
                     <div class="form-group">
                       <!-- Label -->
                       <label>
-                        Available BedSpaces
-                      </label>
-                      <!-- Input -->
-                      <input
-                      type="number"
-                       class="form-select form-control"
-                       v-model="input.bedSpaces"
-                        aria-label="Default select example"/>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <!-- Birthday -->
-                    <div class="form-group">
-                      <!-- Label -->
-                      <label>
                         Opening Hours
                       </label>
                       <!-- Input -->
@@ -190,32 +175,14 @@
                       >
                     </div>
                   </div>
-                  <div v-for="(i, index) in servicesOption.length" :key="index" class="col-12 col-md-6">
-                    <!-- Birthday -->
-                    <div class="form-group">
-                      <!-- Label -->
-                      <label>
-                        Services
-                      </label>
-                      <!-- Input -->
-                      <input
-                        v-model="servicesOption[i-1]"
-                        class="form-control"
-                        data-toggle="flatpickr"
-                      >
-                    </div>
-                  </div>
                   <div class="col-12 col-md-6">
                     <!-- Birthday -->
                     <div class="form-group" />
                   </div>
                 </div> <!-- / .row -->
                 <!-- Button -->
-                <button type="button" class="btn btn-lg btn-block btn-secondary" @click="addServices()">
-                  Add More Services
-                </button>
                 <button type="button" class="btn btn-lg btn-block btn-secondary" @click="addImages()">
-                  Add  More Images
+                  Add Images
                 </button>
                 <button v-if="!isLoading" type="submit" class="btn btn-lg btn-block btn-primary mb-3" @click="addHospital()">
                   Add Hospital
@@ -259,22 +226,15 @@ export default {
         email: '',
         galleryImages: [],
         category: '',
-        openingHours: '',
-        services: []
+        openingHours: ''
       },
-      servicesOption: [],
-      imagesOption: [],
-      bedSpaces: ''
+      imagesOption: []
     }
   },
   mounted () {
-    this.servicesOption.push('')
     this.imagesOption.push('')
   },
   methods: {
-    addServices () {
-      this.servicesOption.push('')
-    },
     addImages () {
       this.imagesOption.push('')
     },
@@ -306,13 +266,11 @@ export default {
     },
     async addHospital () {
       this.isLoading = true
-      this.input.services = this.servicesOption
       this.input.galleryImages.push(...this.imagesOption)
       // this.input.galleryImages.push(...this.imageUrl)
       console.log(this.input.galleryImages)
       const res = await apiService.request(true, urls.ADDHOSPITAL, this.input, 'POST')
       const result = await res.json()
-      console.log(this.input.services)
       if (result.statuscode === 200) {
         this.$router.replace('/homeadmin')
         console.log(result)

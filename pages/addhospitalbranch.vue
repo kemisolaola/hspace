@@ -151,11 +151,10 @@
                     <div class="form-group">
                       <!-- Label -->
                       <label>
-                        Available BedSpaces
+                        Bed Spaces
                       </label>
                       <!-- Input -->
                       <input
-                      type="number"
                        class="form-select form-control"
                        v-model="input.bedSpaces"
                         aria-label="Default select example"/>
@@ -215,7 +214,7 @@
                   Add More Services
                 </button>
                 <button type="button" class="btn btn-lg btn-block btn-secondary" @click="addImages()">
-                  Add  More Images
+                  Add More Images
                 </button>
                 <button v-if="!isLoading" type="submit" class="btn btn-lg btn-block btn-primary mb-3" @click="addHospital()">
                   Add Hospital
@@ -314,7 +313,7 @@ export default {
       const result = await res.json()
       console.log(this.input.services)
       if (result.statuscode === 200) {
-        this.$router.replace('/homeadmin')
+        this.$router.replace('/hosppital')
         console.log(result)
       } else if (result.statuscode === 400) {
         this.isLoading = false

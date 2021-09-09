@@ -29,6 +29,12 @@
                         Pharmacy
                       </h1>
                     </div>
+                    <div class="col text-right"><nuxt-link to="/addpharmacy">
+                       <button class="btn btn-secondary">
+                         Add Pharmacy
+                       </button>
+                       </nuxt-link>
+                      </div>
                   </div> <!-- / .row -->
                   <div class="row align-items-center">
                     <div class="col" />
@@ -52,6 +58,12 @@
                       <th scope="col">
                         City
                       </th>
+                      <th scope="col">
+                        Pharmacy Info
+                      </th>
+                      <th scope="col">
+                        Update
+                      </th>
                       <!-- <th scope="col">
                         Details
                       </th> -->
@@ -68,6 +80,16 @@
                       <td>{{ responseData.name }}</td>
                       <td>{{ responseData.address.state }}</td>
                       <td>{{ responseData.address.city }}</td>
+                      <th>
+                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="details(responseData)">
+                          View
+                        </button>
+                      </th>
+                      <th>
+                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="update(responseData)">
+                          Edit
+                        </button>
+                      </th>
                       <!-- <td>
                         <button type="button" class="btn btn-primary btn-sm">
                           View
@@ -88,7 +110,7 @@
                         </h6>
                         <!-- Title -->
                         <h1 class="header-title">
-                          Pharmarcy
+                          Pharmacy
                         </h1>
                       </div>
                     </div> <!-- / .row -->
@@ -113,6 +135,12 @@
                         <th scope="col">
                           City
                         </th>
+                        <th scope="col">
+                        Pharmacy Info
+                      </th>
+                      <th scope="col">
+                        Update
+                      </th>
                         <!-- <th scope="col">
                           Details
                         </th> -->
@@ -121,11 +149,21 @@
                     <tbody>
                       <tr v-for="(responseData,index) in recentlyAddedPharmarcy" :key="index">
                         <th scope="row">
-                          {{ index + 1 }}
+                          {{ responseData.hospitalID }}
                         </th>
                         <td>{{ responseData.name }}</td>
                         <td>{{ responseData.address.state }}</td>
                         <td>{{ responseData.address.city }}</td>
+                        <th>
+                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="details(responseData)">
+                          View
+                        </button>
+                      </th>
+                      <th>
+                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="update(responseData)">
+                          Edit
+                        </button>
+                      </th>
                         <!-- <td>
                           <button type="button" class="btn btn-primary btn-sm">
                             View
@@ -160,6 +198,35 @@ export default {
       responseDatas: [],
       mostPopularPharmarcy: [],
       recentlyAddedPharmarcy: []
+    }
+  },
+  methods: {
+    details (getData) {
+      console.log(getData.hospitalID)
+      const storeObj = {}
+      storeObj._id = getData._id
+      this.$store.commit('saveHospitalData', storeObj)
+      if (this.$store.state.hospitalInitData.hospitalID !== '') {
+        this.$router.replace('/details')
+      }
+    },
+    update (getData) {
+      console.log(getData.hospitalID)
+      const storeObj = {}
+      storeObj._id = getData._id
+      storeObj.address = getData.address
+      storeObj.services = getData.services
+      storeObj.bedSpaces = getData.bedSpaces
+      storeObj.website = getData.website
+      storeObj.category = getData.category
+      storeObj.galleryImages = getData.galleryImages
+      storeObj.parentHospital = getData.parentHospital
+      storeObj.openingHours = getData.openingHours
+      storeObj.phone = getData.phone
+      this.$store.commit('saveHospitalData', storeObj)
+      if (this.$store.state.hospitalInitData.hospitalID !== '') {
+        this.$router.replace('/updatehospital')
+      }
     }
   },
   async mounted () {

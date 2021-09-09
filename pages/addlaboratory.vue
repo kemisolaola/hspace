@@ -26,7 +26,7 @@
 
                       <!-- Title -->
                       <h1 class="header-title">
-                        Hospital
+                        Laboratory
                       </h1>
                     </div>
                   </div> <!-- / .row -->
@@ -47,11 +47,11 @@
                 </div> <!-- / .row -->
                 <div class="row">
                   <div class="col-12">
-                    <!-- Hospital name name -->
+                    <!-- Laboratory name name -->
                     <div class="form-group">
                       <!-- Label -->
                       <label>
-                        Hospital Name
+                        Laboratory Name
                       </label>
 
                       <!-- Input -->
@@ -151,21 +151,6 @@
                     <div class="form-group">
                       <!-- Label -->
                       <label>
-                        Available BedSpaces
-                      </label>
-                      <!-- Input -->
-                      <input
-                      type="number"
-                       class="form-select form-control"
-                       v-model="input.bedSpaces"
-                        aria-label="Default select example"/>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <!-- Birthday -->
-                    <div class="form-group">
-                      <!-- Label -->
-                      <label>
                         Opening Hours
                       </label>
                       <!-- Input -->
@@ -212,10 +197,10 @@
                 </div> <!-- / .row -->
                 <!-- Button -->
                 <button type="button" class="btn btn-lg btn-block btn-secondary" @click="addServices()">
-                  Add More Services
+                  Add Services
                 </button>
                 <button type="button" class="btn btn-lg btn-block btn-secondary" @click="addImages()">
-                  Add  More Images
+                  Add Images
                 </button>
                 <button v-if="!isLoading" type="submit" class="btn btn-lg btn-block btn-primary mb-3" @click="addHospital()">
                   Add Hospital
@@ -263,8 +248,7 @@ export default {
         services: []
       },
       servicesOption: [],
-      imagesOption: [],
-      bedSpaces: ''
+      imagesOption: []
     }
   },
   mounted () {
@@ -314,7 +298,7 @@ export default {
       const result = await res.json()
       console.log(this.input.services)
       if (result.statuscode === 200) {
-        this.$router.replace('/homeadmin')
+        this.$router.replace('/laboratory')
         console.log(result)
       } else if (result.statuscode === 400) {
         this.isLoading = false

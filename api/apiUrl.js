@@ -5,6 +5,7 @@ export default
   GETHOSPITAL: 'hospital/',
   UPDATEHOSPITAL: 'hospital/',
   ADDHOSPITAL: 'hospital/add',
+  ADDHOSPITALBRANCH: 'hospital/branch/add',
   SIGNUP: 'user/register',
   SIGNUPGOOGLE: 'user/register/google',
   SIGNUPADMIN: 'superadmin/register',

@@ -28,6 +28,12 @@
                         Laboratory
                       </h1>
                     </div>
+                    <div class="col text-right"><nuxt-link to="/addlaboratory">
+                       <button class="btn btn-secondary">
+                         Add Laboratory
+                       </button>
+                       </nuxt-link>
+                      </div>
                   </div> <!-- / .row -->
                   <div class="row align-items-center">
                     <div class="col" />
@@ -51,6 +57,12 @@
                       <th scope="col">
                         City
                       </th>
+                      <th scope="col">
+                        Laboratory Info
+                      </th>
+                      <th scope="col">
+                        Update
+                      </th>
                       <!-- <th scope="col">
                         Details
                       </th> -->
@@ -67,11 +79,16 @@
                       <td>{{ responseData.name }}</td>
                       <td>{{ responseData.address.state }}</td>
                       <td>{{ responseData.address.city }}</td>
-                      <!-- <th>
-                        <button type="button" class="btn btn-sm btn-block btn-primary">
+                     <th>
+                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="details(responseData)">
                           View
                         </button>
-                      </th> -->
+                      </th>
+                      <th>
+                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="update(responseData)">
+                          Edit
+                        </button>
+                      </th>
                     </tr>
                   </tbody>
                 </table>
@@ -112,6 +129,12 @@
                       <th scope="col">
                         City
                       </th>
+                      <th scope="col">
+                        Laboratory Info
+                      </th>
+                      <th scope="col">
+                        Update
+                      </th>
                       <!-- <th scope="col">
                         Details
                       </th> -->
@@ -125,11 +148,16 @@
                       <td>{{ responseData.name }}</td>
                       <td>{{ responseData.address.state }}</td>
                       <td>{{ responseData.address.city }}</td>
-                      <!-- <td>
-                        <button type="button" class="btn btn-primary btn-sm">
+                     <th>
+                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="details(responseData)">
                           View
                         </button>
-                      </td> -->
+                      </th>
+                      <th>
+                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="update(responseData)">
+                          Edit
+                        </button>
+                      </th>
                     </tr>
                   </tbody>
                 </table>
@@ -171,6 +199,35 @@ export default {
     } else if (result.statuscode === 400) {
       alert(result.message)
       console.log(result)
+    }
+  },
+  methods: {
+    details (getData) {
+      console.log(getData.hospitalID)
+      const storeObj = {}
+      storeObj._id = getData._id
+      this.$store.commit('saveHospitalData', storeObj)
+      if (this.$store.state.hospitalInitData.hospitalID !== '') {
+        this.$router.replace('/details')
+      }
+    },
+    update (getData) {
+      console.log(getData.hospitalID)
+      const storeObj = {}
+      storeObj._id = getData._id
+      storeObj.address = getData.address
+      storeObj.services = getData.services
+      storeObj.bedSpaces = getData.bedSpaces
+      storeObj.website = getData.website
+      storeObj.category = getData.category
+      storeObj.galleryImages = getData.galleryImages
+      storeObj.parentHospital = getData.parentHospital
+      storeObj.openingHours = getData.openingHours
+      storeObj.phone = getData.phone
+      this.$store.commit('saveHospitalData', storeObj)
+      if (this.$store.state.hospitalInitData.hospitalID !== '') {
+        this.$router.replace('/updatehospital')
+      }
     }
   }
 }
