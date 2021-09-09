@@ -43,7 +43,7 @@
                 <thead>
                   <tr>
                     <th scope="col">
-                      S/N
+                      Hospital ID
                     </th>
                     <th scope="col">
                       Name
@@ -71,7 +71,7 @@
                 <tbody>
                   <tr v-for="(responseData,index) in mostPopularHospital" :key="index">
                     <th scope="row">
-                      {{ index + 1 }}
+                      {{responseData.hospitalID }}
                     </th>
                     <td>{{ responseData.name }}</td>
                     <td>{{ responseData.address.state }}</td>
@@ -117,7 +117,7 @@
                 <thead>
                   <tr>
                     <th scope="col">
-                      S/N
+                      Hospital ID
                     </th>
                     <th scope="col">
                       Name
@@ -142,7 +142,7 @@
                 <tbody>
                   <tr v-for="(responseData,index) in recentlyAddedHospital" :key="index">
                     <th scope="row">
-                      {{ index + 1 }}
+                      {{ responseData.hospitalID }}
                     </th>
                     <td>{{ responseData.name }}</td>
                     <td>{{ responseData.address.state }}</td>

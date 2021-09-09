@@ -143,7 +143,7 @@
                   <tbody>
                     <tr v-for="(responseData,index) in recentlyAddedLaboratory" :key="index">
                       <th scope="row">
-                        {{ index + 1 }}
+                        {{ responseData.hospitalID }}
                       </th>
                       <td>{{ responseData.name }}</td>
                       <td>{{ responseData.address.state }}</td>
