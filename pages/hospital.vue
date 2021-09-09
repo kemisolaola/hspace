@@ -55,9 +55,6 @@
                       City
                     </th>
                     <th scope="col">
-                      Street
-                    </th>
-                    <th scope="col">
                         Hospital Info
                       </th>
                       <th scope="col">
@@ -76,7 +73,6 @@
                     <td>{{ responseData.name }}</td>
                     <td>{{ responseData.address.state }}</td>
                     <td>{{ responseData.address.city }}</td>
-                    <td>{{ responseData.address.street }}</td>
                     <th>
                         <button type="button" class="btn btn-lg btn-block btn-primary" @click="details(responseData)">
                           View
@@ -129,9 +125,6 @@
                       City
                     </th>
                     <th scope="col">
-                      Street
-                    </th>
-                    <th scope="col">
                         Hospital Info
                       </th>
                       <th scope="col">
@@ -147,7 +140,6 @@
                     <td>{{ responseData.name }}</td>
                     <td>{{ responseData.address.state }}</td>
                     <td>{{ responseData.address.city }}</td>
-                    <td>{{ responseData.address.street }}</td>
                     <th>
                         <button type="button" class="btn btn-lg btn-block btn-primary" @click="details(responseData)">
                           View
