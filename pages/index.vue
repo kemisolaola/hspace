@@ -97,6 +97,7 @@ export default {
         this.$router.replace('/addhospital')
       } else if (result.statuscode === 400) {
         this.isLoading = false
+        alert(result.message)
         console.log(result)
       }
     },
