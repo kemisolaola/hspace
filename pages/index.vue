@@ -17,7 +17,7 @@
               Phone Number
             </label>
             <!-- Input -->
-            <input required v-model="input.phone" type="text" class="form-control" placeholder="phone number">
+            <input v-model="input.phone" type="text" class="form-control" placeholder="phone number">
           </div>
           <div class="form-group">
             <!-- Label -->
@@ -25,7 +25,7 @@
               Email Address
             </label>
             <!-- Input -->
-            <input v-model="input.email" required type="email" class="form-control" placeholder="name@address.com">
+            <input v-model="input.email" type="email" class="form-control" placeholder="name@address.com">
           </div>
           <!-- Password -->
           <div class="form-group">
@@ -46,7 +46,7 @@
                  <!-- Input group -->
             <div class="input-group input-group-merge">
               <!-- Input -->
-              <input v-model="input.password" required :type="type" class="form-control" placeholder="Enter your password">
+              <input v-model="input.password"  :type="type" class="form-control" placeholder="Enter your password">
               </div>
           </div>
           <!-- Submit -->
@@ -94,7 +94,7 @@ export default {
       if (result.statuscode === 200) {
         console.log(result)
         this.isLoading = false
-        this.$router.replace('/signinadmin')
+        this.$router.replace('/addhospital')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert('All fields are required')

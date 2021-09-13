@@ -124,6 +124,17 @@
                       <input v-model="input.bedSpaces" type="text" class="form-control" data-mask="(000) 000-0000">
                     </div>
                   </div>
+                  <div v-if="input.category == 'HOSPITAL'" class="col-12 col-md-6">
+                    <!-- Phone -->
+                    <div class="form-group">
+                      <!-- Label -->
+                      <label>
+                        Available Bed Spaces
+                      </label>
+                      <!-- Input -->
+                      <input v-model="input.availableBedSpaces" type="text" class="form-control" data-mask="(000) 000-0000">
+                    </div>
+                  </div>
                   <div v-for="(i, index) in input.galleryImages.length" :key="index" class="col-12 col-md-6">
                     <!-- Phone -->
                     <div class="form-group">
@@ -256,7 +267,8 @@ export default {
         openingHours: this.$store.state.hospitalInitData.openingHours,
         galleryImages: this.$store.state.hospitalInitData.galleryImages,
         parentHospital: this.$store.state.hospitalInitData.parentHospital,
-        phone: this.$store.state.hospitalInitData.phone
+        phone: this.$store.state.hospitalInitData.phone,
+        availableBedSpaces: ''
       },
       isLoading: false,
       servicesOption: [],
