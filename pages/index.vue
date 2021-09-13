@@ -97,7 +97,6 @@ export default {
         this.$router.replace('/addhospital')
       } else if (result.statuscode === 400) {
         this.isLoading = false
-        alert('All fields are required')
         console.log(result)
       }
     },
