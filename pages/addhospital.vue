@@ -132,10 +132,11 @@
                       </label>
                       <!-- Input -->
                       <input
+                      required
                        class="form-select form-control"
                        v-model="input.category"
                        @input="input.category=$event.target.value.toUpperCase()"
-                        aria-label="Default select example"/>
+                       />
                       <!-- <input
                         v-model="input.category"
                         required
@@ -314,7 +315,7 @@ export default {
       const result = await res.json()
       console.log(this.input.services)
       if (result.statuscode === 200) {
-        this.$router.replace('/homeadmin')
+        this.$router.replace('/hospital')
         console.log(result)
       } else if (result.statuscode === 400) {
         this.isLoading = false

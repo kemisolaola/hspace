@@ -46,7 +46,18 @@ export default {
   axios: {
     baseURL: 'https://clemac-hspace.herokuapp.com/v1'
   },
-
+  vuetify: {
+    treeshake: true,
+    defaultAssets: {
+      font: {
+        family: 'Gotham'
+      }
+    },
+    customVariables: ['~/sass/variables.scss'],
+    theme: {
+      dark: false
+    }
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },

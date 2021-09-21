@@ -313,7 +313,7 @@ export default {
       const result = await res.json()
       console.log(this.input.services)
       if (result.statuscode === 200) {
-        this.$router.replace('/hosppital')
+        this.$router.replace('/hospital')
         console.log(result)
       } else if (result.statuscode === 400) {
         this.isLoading = false
