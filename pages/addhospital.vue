@@ -173,7 +173,7 @@
                       <input v-model="input.openingHours" required type="text" class="form-control" data-toggle="flatpickr">
                     </div>
                   </div>
-                  <div v-for="(i, index) in imagesOption.length" :key="index" class="col-12 col-md-6">
+                  <div v-for="(i, index) in imagesOption" :key="index" class="col-12 col-md-6">
                     <!-- Birthday -->
                     <div class="form-group">
                       <!-- Label -->
@@ -184,14 +184,14 @@
                       <input
                       accept=".jpeg,.jpg,.png,image/jpeg,image/png"
                        @change="addImage"
-                        placeholder="Enter Image url"
+                        placeholder="Enter Image"
                         class="form-control"
                         data-toggle="flatpickr"
                         type="file"
                       >
                     </div>
                   </div>
-                  <div v-for="(i, index) in servicesOption.length" :key="index" class="col-12 col-md-6">
+                  <div v-for="(i, index) in servicesOption" :key="index" class="col-12 col-md-6">
                     <!-- Birthday -->
                     <div class="form-group">
                       <!-- Label -->
@@ -200,7 +200,7 @@
                       </label>
                       <!-- Input -->
                       <input
-                        v-model="servicesOption[i-1]"
+                        v-model="servicesOption[index]"
                         class="form-control"
                         data-toggle="flatpickr"
                       >
@@ -308,7 +308,7 @@ export default {
     async addHospital () {
       this.isLoading = true
       this.input.services = this.servicesOption
-      this.input.galleryImages.push(...this.imagesOption)
+      // this.input.galleryImages.push(...this.imagesOption)
       // this.input.galleryImages.push(...this.imageUrl)
       console.log(this.input.galleryImages)
       const res = await apiService.request(true, urls.ADDHOSPITAL, this.input, 'POST')

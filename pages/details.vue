@@ -36,6 +36,7 @@
                           <h4 v-for="(phone, index) in responseDatas.phone" :key="index" class="">
                             {{ phone }}
                           </h4>
+                          <!-- <span>{{responseDatas.address.city}}</span> -->
                         </div>
                       </div> <!-- / .row -->
                       <div class="container-fluid">

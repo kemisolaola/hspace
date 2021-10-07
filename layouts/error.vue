@@ -3,8 +3,8 @@
     <h1 v-if="error.statusCode === 404">
       {{ pageNotFound }}
     </h1>
-    <h1 v-else>
-      {{ otherError }}
+    <h1 v-if="error.statusCode === 400">
+      {{ networkProblem }}
     </h1>
     <NuxtLink to="/">
       Home page
@@ -24,7 +24,8 @@ export default {
   data () {
     return {
       pageNotFound: '404 Not Found',
-      otherError: 'An error occurred'
+      otherError: 'An error occurred',
+      networkProblem: 'NetWork problem Refresh Page'
     }
   },
   head () {

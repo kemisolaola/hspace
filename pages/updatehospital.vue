@@ -41,69 +41,64 @@
                     </div> <!-- / .row -->
                   </div>
                 </div> <!-- / .row -->
-                <div class="row">
-                  <div class="col-12 col-md-6">
-                    <!-- Last name -->
+                 <div class="row">
+                    <div class="col-12">
+                    <!-- Hospital name name -->
                     <div class="form-group">
                       <!-- Label -->
                       <label>
-                        State
+                        Hospital Name
                       </label>
+
                       <!-- Input -->
-                      <input v-model="input.address.state" type="text" class="form-control">
-                    </div>
-                  </div><div class="col-12 col-md-6">
-                    <!-- Last name -->
-                    <div class="form-group">
-                      <!-- Label -->
-                      <label>
-                        City
-                      </label>
-                      <!-- Input -->
-                      <input v-model="input.address.city" type="text" class="form-control">
+                      <input v-model="input.name" required type="text" class="form-control">
                     </div>
                   </div>
-                  <div class="col-12">
-                    <!-- Last name -->
+                  <div class="col-12 col-md-6">
                     <div class="form-group">
-                      <!-- Label -->
+                       <label>
+                        State
+                      </label>
+                      <input v-model="state" type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <div class="form-group">
+                       <label>
+                        City
+                      </label>
+                      <input v-model="city" type="text" class="form-control">
+                    </div>
+                  </div>
+                   <div class="col-12  col-md-6">
+                    <div class="form-group">
                       <label>
                         Street
                       </label>
-                      <!-- Input -->
-                      <input v-model="input.address.street" type="text" class="form-control">
+                      <input v-model="street" type="text" class="form-control">
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
-                    <!-- Phone -->
                     <div class="form-group">
-                      <!-- Label -->
                       <label>
                         Phone Number
                       </label>
-                      <!-- Input -->
                       <input v-model="input.phone" type="text" class="form-control" data-mask="(000) 000-0000">
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
-                    <!-- Phone -->
                     <div class="form-group">
-                      <!-- Label -->
                       <label>
                         Website
                       </label>
-                      <!-- Input -->
                       <input v-model="input.website" type="text" class="form-control" data-mask="(000) 000-0000">
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
-                    <!-- Phone -->
                     <div class="form-group">
-                      <!-- Label -->
                       <label>
                         Category
                       </label>
-                      <!-- Input -->
                       <input
                         v-model="input.category"
                         type="text"
@@ -114,50 +109,37 @@
                     </div>
                   </div>
                   <div v-if="input.category == 'HOSPITAL'" class="col-12 col-md-6">
-                    <!-- Phone -->
                     <div class="form-group">
-                      <!-- Label -->
                       <label>
                         No of Bed Spaces
                       </label>
-                      <!-- Input -->
                       <input v-model="input.bedSpaces" type="text" class="form-control" data-mask="(000) 000-0000">
                     </div>
                   </div>
-                  <div v-if="input.category == 'HOSPITAL'" class="col-12 col-md-6">
-                    <!-- Phone -->
+                  <!-- <div v-if="input.category == 'HOSPITAL'" class="col-12 col-md-6">
                     <div class="form-group">
-                      <!-- Label -->
                       <label>
                         Available Bed Spaces
                       </label>
-                      <!-- Input -->
                       <input v-model="input.availableBedSpaces" type="text" class="form-control" data-mask="(000) 000-0000">
                     </div>
-                  </div>
-                  <div v-for="(i, index) in input.galleryImages.length" :key="index" class="col-12 col-md-6">
-                    <!-- Phone -->
+                  </div> -->
+                  <div v-for="(galleryImage, index) in input.galleryImages" :key="galleryImage" class="col-12 col-md-6">
                     <div class="form-group">
-                      <!-- Label -->
                       <label>
                         Gallery Image
                       </label>
-                      <!-- Input -->
-                      <input :value="input.galleryImages[i-1]" type="text" class="form-control" data-mask="(000) 000-0000">
+                      <input :value="input.galleryImages[index]" type="text" class="form-control">
                     </div>
                   </div>
-                  <div v-for="(i, index) in imagesOption.length" :key="index" class="col-12 col-md-6">
-                    <!-- Phone -->
+                  <div v-for="(imagesOpt, index) in imagesOption" :key="index" class="col-12 col-md-6">
                     <div class="form-group">
-                      <!-- Label -->
                       <label>
                         Gallery Image
                       </label>
-                      <!-- Input -->
                       <input
                         accept=".jpeg,.jpg,.png,image/jpeg,image/png"
                        @change="addImage"
-                        placeholder="Enter Image url"
                         class="form-control"
                         data-toggle="flatpickr"
                         type="file"
@@ -165,58 +147,46 @@
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
-                    <!-- Phone -->
                     <div class="form-group">
-                      <!-- Label -->
                       <label>
                         Parent Hospital
                       </label>
-                      <!-- Input -->
                       <input v-model="input.parentHospital" type="text" class="form-control" data-mask="(000) 000-0000">
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
-                    <!-- Phone -->
                     <div class="form-group">
-                      <!-- Label -->
                       <label>
                         Opening Hours
                       </label>
-                      <!-- Input -->
-                      <input v-model="input.openingHours" type="text" class="form-control" data-mask="(000) 000-0000">
+                      <input v-model="input.openingHours" type="text" class="form-control" data-mask="">
                     </div>
                   </div>
-                  <div v-for="(i, index) in input.services.length" :key="index" class="col-12 col-md-6">
-                    <!-- Phone -->
-                    <div class="form-group">
-                      <!-- Label -->
+                  <div v-for="(service, index) in input.services" :key="index" class="col-12 col-md-6">
+                    <div v-if="input.services.length > 0" class="form-group">
                       <label>
                         Services
                       </label>
-                      <!-- Input -->
                       <input
-                        :value="input.services[i-1]"
+                        v-model="input.services[index]"
                         type="text"
+                        class="form-control"
+                      >
+                  </div>
+                  </div>
+                  <div v-for="(servicesOpt, index) in servicesOption" :key="index" class="col-12 col-md-6">
+                    <div class="form-group">
+                       <label>
+                        Services
+                      </label>
+                       <input
+                        v-model="servicesOption[index]"
                         class="form-control"
                       >
                     </div>
                   </div>
-                  <div v-for="(i, index) in servicesOption.length" :key="index" class="col-12 col-md-6">
-                    <!-- Phone -->
-                    <div class="form-group">
-                      <!-- Label -->
-                      <label>
-                        Services
-                      </label>
-                      <!-- Input -->
-                      <input
-                        v-model="servicesOption[i-1]"
-                        type="text"
-                        class="form-control"
-                      >
-                    </div>
-                  </div>
-                </div> <!-- / .row -->
+                </div>
+                <!-- / .row -->
                 <!-- Button -->
                 <button type="button" class="btn btn-lg btn-block btn-secondary" @click="addServices()">
                   Add Services
@@ -250,33 +220,68 @@ export default {
   components: {
     Sidebar
   },
+  // data () {
+  //   return {
+  //     tokenKey: '',
+  //     hospital: this.$store.state.hospitalInitData._id,
+  //     input: {
+  //       address: {
+  //         street: this.$store.state.hospitalInitData.address.street,
+  //         state: this.$store.state.hospitalInitData.address.state,
+  //         city: this.$store.state.hospitalInitData.address.city
+  //       },
+  //       services: this.$store.state.hospitalInitData.services,
+  //       bedSpaces: this.$store.state.hospitalInitData.bedSpaces,
+  //       category: this.$store.state.hospitalInitData.category,
+  //       website: this.$store.state.hospitalInitData.website,
+  //       openingHours: this.$store.state.hospitalInitData.openingHours,
+  //       galleryImages: this.$store.state.hospitalInitData.galleryImages,
+  //       parentHospital: this.$store.state.hospitalInitData.parentHospital,
+  //       phone: this.$store.state.hospitalInitData.phone,
+  //       availableBedSpaces: ''
+  //     },
+  //     isLoading: false,
+  //     servicesOption: [],
+  //     imagesOption: [],
+  //     imagesurl: ''
+  //   }
+  // },
+  // mounted () {
+  //   this.servicesOption.push('')
+  // },
   data () {
     return {
       tokenKey: '',
       hospital: this.$store.state.hospitalInitData._id,
-      input: {
-        address: {
-          street: this.$store.state.hospitalInitData.address.street,
-          state: this.$store.state.hospitalInitData.address.state,
-          city: this.$store.state.hospitalInitData.address.city
-        },
-        services: this.$store.state.hospitalInitData.services,
-        bedSpaces: this.$store.state.hospitalInitData.bedSpaces,
-        category: this.$store.state.hospitalInitData.category,
-        website: this.$store.state.hospitalInitData.website,
-        openingHours: this.$store.state.hospitalInitData.openingHours,
-        galleryImages: this.$store.state.hospitalInitData.galleryImages,
-        parentHospital: this.$store.state.hospitalInitData.parentHospital,
-        phone: this.$store.state.hospitalInitData.phone,
-        availableBedSpaces: ''
-      },
+      input: [],
+      city: '',
+      state: '',
+      street: '',
       isLoading: false,
       servicesOption: [],
-      imagesOption: []
+      imagesOption: [],
+      imagesurl: '',
+      address: {}
     }
   },
-  mounted () {
-    // this.servicesOption.push('')
+  // created () {
+  //   this.servicesOption.push('')
+  // },
+  async mounted () {
+    console.log(this.hospital)
+    const res = await apiService.request(true, urls.GETHOSPITAL + this.hospital)
+    const result = await res.json()
+    if (result.statuscode === 200) {
+      this.input = result.data
+      console.log(this.input.address.state)
+      this.city = this.input.address.city
+      this.street = this.input.address.street
+      this.state = this.input.address.state
+      apiService.getToken(this.tokenKey)
+      console.log(this.input)
+    } else if (result.statuscode === 400) {
+      console.log(this.input)
+    }
   },
   methods: {
     addServices () {
@@ -306,21 +311,27 @@ export default {
       })
       console.log(instance)
       console.log(instance.secure_url)
-      const imageUrl = instance.secure_url
-      console.log(imageUrl)
-      // this.input.galleryImages.push(...imageUrl)
-      this.input.galleryImages.push(imageUrl)
+      this.imagesurl = instance.secure_url
+      this.galleryImages.push(this.galleryImages)
     },
     async update () {
       this.isLoading = true
-      this.input.services.push(...this.servicesOption)
-      this.input.galleryImages.push(...this.imagesOption)
+      // this.address.push(this.city, this.street, this.state)
+      this.input.services = this.input.services.concat(this.servicesOption)
+      console.log(this.input.services)
+      this.input.address.state = this.state
+      this.input.address.city = this.city
+      this.input.address.street = this.city
+      console.log(this.input.address.city + ' new adder')
+      // this.input.address = this.address
+      // console.log('new' + this.input.address)
+      // this.input.galleryImages.push(this.imagesurl)
       const res = await apiService.request(true, urls.UPDATEHOSPITAL + this.hospital, this.input, 'PUT')
       const result = await res.json()
       result.data.address = this.address
       if (result.statuscode === 200) {
         this.isLoading = false
-        this.$router.replace('/homeadmin')
+        this.$router.replace('/hospital')
         console.log(result)
       } else if (result.statuscode === 400) {
         this.isLoading = false

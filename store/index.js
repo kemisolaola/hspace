@@ -6,11 +6,11 @@ export const state = () => ({
       city: '',
       street: ''
     },
-    services: [],
+    services: [''],
     bedSpaces: '',
     website: '',
     category: [],
-    galleryImages: '',
+    galleryImages: [''],
     parentHospital: [],
     openingHours: '',
     phone: []

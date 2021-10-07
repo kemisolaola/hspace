@@ -19,9 +19,6 @@
                 <div class="header-body">
                   <div class="row align-items-center">
                     <div class="col">
-                      <h6 class="header-pretitle">
-                        Most Popular
-                      </h6>
                       <!-- Title -->
                       <h1 class="header-title">
                         Hospital
@@ -66,90 +63,28 @@
                             <span v-if="isLoading" class="visually-hidden"></span>
                         </div> -->
                 <tbody>
-                  <tr v-for="(responseData,index) in mostPopularHospital" :key="index">
+                  <tr v-for="(responseData,index) in responseDatas" :key="index">
                     <th scope="row">
                       {{responseData.hospitalID }}
                     </th>
                     <td>{{ responseData.name }}</td>
-                    <td>{{ responseData.address.state }}</td>
-                    <td>{{ responseData.address.city }}</td>
+                    <td v-if="responseData.address">{{ responseData.address.state }}</td>
+                    <td v-if="responseData.address">{{ responseData.address.city }}</td>
                     <th>
                         <button type="button" class="btn btn-lg btn-block btn-primary" @click="details(responseData)">
                           View
                         </button>
                       </th>
                       <th>
-                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="update(responseData)">
+                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="edit(responseData)">
                           Edit
                         </button>
                       </th>
-                  </tr>
-                </tbody>
-              </table>
-              <br><br>
-            </div>
-            <div class="col-12">
-              <!-- Header -->
-              <div class="header mt-md-5">
-                <div class="header-body">
-                  <div class="row align-items-center">
-                    <div class="col">
-                      <h6 class="header-pretitle">
-                        Recently Added
-                      </h6>
-                      <!-- Title -->
-                      <h1 class="header-title">
-                        Hospital
-                      </h1>
-                    </div>
-                  </div> <!-- / .row -->
-                  <div class="row align-items-center">
-                    <div class="col" />
-                  </div>
-                </div>
-              </div>
-
-              <table class="table table-sm table-hover table-nowrap card-table">
-                <thead>
-                  <tr>
-                    <th scope="col">
-                      Hospital ID
-                    </th>
-                    <th scope="col">
-                      Name
-                    </th>
-                    <th scope="col">
-                      State
-                    </th>
-                    <th scope="col">
-                      City
-                    </th>
-                    <th scope="col">
-                        Hospital Info
-                      </th>
-                      <th scope="col">
-                        Update
-                      </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(responseData,index) in recentlyAddedHospital" :key="index">
-                    <th scope="row">
-                      {{ responseData.hospitalID }}
-                    </th>
-                    <td>{{ responseData.name }}</td>
-                    <td>{{ responseData.address.state }}</td>
-                    <td>{{ responseData.address.city }}</td>
-                    <th>
-                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="details(responseData)">
-                          View
+                      <!-- <th>
+                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="del(responseData._id)">
+                          del
                         </button>
-                      </th>
-                      <th>
-                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="update(responseData)">
-                          Edit
-                        </button>
-                      </th>
+                      </th> -->
                   </tr>
                 </tbody>
               </table>
@@ -182,11 +117,9 @@ export default {
   },
   async mounted () {
     this.isLoading = false
-    const res = await apiService.request(true, urls.HOME)
+    const res = await apiService.request(true, urls.HOSPITAL)
     const result = await res.json()
     this.responseDatas = result.data
-    this.mostPopularHospital = result.data.mostPopular
-    this.recentlyAddedHospital = result.data.recentlyAdded
     this.isLoading = false
     if (result.statuscode === 200) {
       this.isLoading = false
@@ -198,6 +131,21 @@ export default {
     }
   },
   methods: {
+    // async del (id) {
+    //   this.isLoading = false
+    //   const res = await apiService.request(true, urls.GETHOSPITAL + id, {}, 'DELETE')
+    //   const result = await res.json()
+    //   this.responseDatas = result.data
+    //   this.isLoading = false
+    //   if (result.statuscode === 200) {
+    //     this.isLoading = false
+    //     console.log(result)
+    //   } else if (result.statuscode === 400) {
+    //     alert(result.message)
+    //     console.log(result)
+    //     this.isLoading = true
+    //   }
+    // },
     details (getData) {
       console.log(getData.hospitalID)
       const storeObj = {}
@@ -207,24 +155,33 @@ export default {
         this.$router.replace('/details')
       }
     },
-    update (getData) {
+    edit (getData) {
       console.log(getData.hospitalID)
       const storeObj = {}
       storeObj._id = getData._id
-      storeObj.address = getData.address
-      storeObj.services = getData.services
-      storeObj.bedSpaces = getData.bedSpaces
-      storeObj.website = getData.website
-      storeObj.category = getData.category
-      storeObj.galleryImages = getData.galleryImages
-      storeObj.parentHospital = getData.parentHospital
-      storeObj.openingHours = getData.openingHours
-      storeObj.phone = getData.phone
       this.$store.commit('saveHospitalData', storeObj)
       if (this.$store.state.hospitalInitData.hospitalID !== '') {
         this.$router.replace('/updatehospital')
       }
     }
+    // update (getData) {
+    //   console.log(getData.hospitalID)
+    //   const storeObj = {}
+    //   storeObj._id = getData._id
+    //   storeObj.address = getData.address
+    //   storeObj.services = getData.services
+    //   storeObj.bedSpaces = getData.bedSpaces
+    //   storeObj.website = getData.website
+    //   storeObj.category = getData.category
+    //   storeObj.galleryImages = getData.galleryImages
+    //   storeObj.parentHospital = getData.parentHospital
+    //   storeObj.openingHours = getData.openingHours
+    //   storeObj.phone = getData.phone
+    //   this.$store.commit('saveHospitalData', storeObj)
+    //   if (this.$store.state.hospitalInitData.hospitalID !== '') {
+    //     this.$router.replace('/updatehospital')
+    //   }
+    // }
   }
 }
 </script>

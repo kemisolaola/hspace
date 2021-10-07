@@ -201,6 +201,9 @@ export default {
     }
   },
   methods: {
+    updateServices (e) {
+      this.$store.commit('updateServices', e.target.value)
+    },
     details (getData) {
       console.log(getData.hospitalID)
       const storeObj = {}

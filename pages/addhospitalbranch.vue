@@ -132,6 +132,7 @@
                       </label>
                       <!-- Input -->
                       <input
+                      placeholder="Hospital,Pharmacy or Laboratory "
                        class="form-select form-control"
                        v-model="input.category"
                        @input="input.category=$event.target.value.toUpperCase()"
@@ -168,7 +169,24 @@
                         Opening Hours
                       </label>
                       <!-- Input -->
-                      <input v-model="input.openingHours" required type="text" class="form-control" data-toggle="flatpickr">
+                      <input
+                       placeholder="12AM - 3PM"
+                       v-model="input.openingHours"
+                       required
+                        type="text"
+                        class="form-control"
+                        data-toggle="flatpickr">
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <!-- Phone -->
+                    <div class="form-group">
+                      <!-- Label -->
+                      <label>
+                        Parent Hospital
+                      </label>
+                      <!-- Input -->
+                      <input v-model="input.parentHospital" type="text" class="form-control" data-mask="(000) 000-0000">
                     </div>
                   </div>
                   <div v-for="(i, index) in imagesOption.length" :key="index" class="col-12 col-md-6">
@@ -189,7 +207,7 @@
                       >
                     </div>
                   </div>
-                  <div v-for="(i, index) in servicesOption.length" :key="index" class="col-12 col-md-6">
+                  <div v-for="(i, index) in servicesOption" :key="index" class="col-12 col-md-6">
                     <!-- Birthday -->
                     <div class="form-group">
                       <!-- Label -->
@@ -198,7 +216,7 @@
                       </label>
                       <!-- Input -->
                       <input
-                        v-model="servicesOption[i-1]"
+                        v-model="servicesOption[index]"
                         class="form-control"
                         data-toggle="flatpickr"
                       >
@@ -306,10 +324,10 @@ export default {
     async addHospital () {
       this.isLoading = true
       this.input.services = this.servicesOption
-      this.input.galleryImages.push(...this.imagesOption)
+      // this.input.galleryImages.push(...this.imagesOption)
       // this.input.galleryImages.push(...this.imageUrl)
       console.log(this.input.galleryImages)
-      const res = await apiService.request(true, urls.ADDHOSPITAL, this.input, 'POST')
+      const res = await apiService.request(true, urls.ADDHOSPITALBRANCH, this.input, 'POST')
       const result = await res.json()
       console.log(this.input.services)
       if (result.statuscode === 200) {

@@ -1,7 +1,7 @@
 export default
 {
   BASEURL: 'https://clemac-hspace.herokuapp.com/v1/',
-  HOSPITAL: 'hospital',
+  HOSPITAL: 'admin/hospital',
   GETHOSPITAL: 'hospital/',
   UPDATEHOSPITAL: 'hospital/',
   ADDHOSPITAL: 'hospital/add',
