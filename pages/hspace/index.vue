@@ -1,61 +1,82 @@
 <template>
-  <!-- CONTENT
-    ================================================== -->
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-5 col-xl-4 my-7">
+      <div class="col-12 col-md-5 col-xl-4 my-5">
+        <!-- Heading -->
         <h1 class="display-4 text-center mb-3">
           <img class="justify-content-center text-center mx-auto" width="200px" height="60px" src="Hspace.png">
-          <br><br> Sign in
+          <br><br>
+          Hspace Sign up
         </h1>
         <!-- Form -->
         <form>
           <!-- Email address -->
           <div class="form-group">
             <!-- Label -->
-            <label>Email Address</label>
+            <label>
+             First Name
+            </label>
+            <!-- Input -->
+            <input v-model="input.firstName" type="text" class="form-control" placeholder="First Name">
+          </div>
+          <div class="form-group">
+            <!-- Label -->
+            <label>
+              Surname
+            </label>
+            <!-- Input -->
+            <input v-model="input.lastName" type="text" class="form-control" placeholder="Surname">
+          </div>
+          <div class="form-group">
+            <!-- Label -->
+            <label>
+              Phone Number
+            </label>
+            <!-- Input -->
+            <input v-model="input.phone" type="text" class="form-control" placeholder="phone number">
+          </div>
+          <div class="form-group">
+            <!-- Label -->
+            <label>
+              Email Address
+            </label>
             <!-- Input -->
             <input v-model="input.email" type="email" class="form-control" placeholder="name@address.com">
           </div>
           <!-- Password -->
           <div class="form-group">
+            <!-- Label -->
             <div class="row">
               <div class="col">
-                <!-- Label -->
-                <label>Password</label>
+                <label>
+                  Password
+                </label>
               </div>
               <div class="col-auto">
-                <!-- Help text -->
-                <a class="form-text small text-muted" @click="showPassword()">
+                <a to="" class="form-text small" @click="showPassword()">
                   {{ text }}
                 </a>
               </div>
-            </div> <!-- / .row -->
+            </div>
+            <!-- Help text -->
             <!-- Input group -->
             <div class="input-group input-group-merge">
               <!-- Input -->
               <input v-model="input.password" :type="type" class="form-control" placeholder="Enter your password">
-              <!-- Icon -->
             </div>
           </div>
-          <div class="col-auto">
-            <!-- Help text -->
-            <nuxt-link to="resetpasswordadminreq" class="form-text small text-muted">
-              Forgot password?
-            </nuxt-link>
-          </div>
           <!-- Submit -->
-          <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="signin">
-            Sign in
+          <button v-if="!isLoading" type="submit" class="btn btn-lg btn-block btn-primary mb-3" @click="signup()">
+            Sign up
           </button>
           <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="signup()">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
-            Sign in
+            Sign up
           </button>
           <!-- Link -->
           <div class="text-center">
             <small class="text-muted text-center">
-              Don't have an account yet? <nuxt-link to="/">Sign up</nuxt-link>.
+              Already have an account? <nuxt-link to="hspace/signin">Log in</nuxt-link>.
             </small>
           </div>
         </form>
@@ -65,13 +86,16 @@
 </template>
 
 <script>
-import apiService from '../api/apiservice'
-import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
+import apiService from '~/api/apiservice'
+import urls from '~/api/apiUrl'
+import '~/assets/css/theme-dark.min.css'
 export default {
   data () {
     return {
       input: {
+        phone: '',
+        firstName: '',
+        lastName: '',
         email: '',
         password: ''
       },
@@ -81,21 +105,19 @@ export default {
     }
   },
   methods: {
-    async signin () {
+    async signup () {
       this.isLoading = true
-      const res = await apiService.request(false, urls.SIGNINADMIN, this.input, 'POST')
+      const res = await apiService.request(false, urls.SIGNUPSUPERADMIN, this.input, 'POST')
       const result = await res.json()
       if (result.statuscode === 200) {
-        apiService.setToken(result.data.token)
-        this.isLoading = false
         console.log(result)
-        console.log('this is ' + apiService.getToken())
-        this.$router.replace('/hospital')
+        this.isLoading = false
+        this.$router.replace('/hspace/hospitals')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)
+        console.log(result)
       }
-      console.log(result)
     },
     showPassword () {
       if (this.type === 'password') {
@@ -110,6 +132,5 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
 </style>

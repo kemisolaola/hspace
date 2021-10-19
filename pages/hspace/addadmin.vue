@@ -5,7 +5,7 @@
     ================================================== -->
 
       <nav id="sidebar" class="navbar navbar-vertical fixed-left navbar-expand-md ">
-        <Sidebar />
+        <Hspacesidebar />
       </nav>
       <!-- MAIN CONTENT
     ================================================== -->
@@ -20,12 +20,12 @@
                     <div class="col">
                       <!-- Pretitle -->
                       <h6 class="header-pretitle">
-                        UPDATE
+                        Add
                       </h6>
 
                       <!-- Title -->
                       <h1 class="header-title">
-                        PROFILE
+                        Admin
                       </h1>
                     </div>
                   </div> <!-- / .row -->
@@ -50,11 +50,11 @@
                     <div class="form-group">
                       <!-- Label -->
                       <label>
-                        First Name
+                        Hospital ID
                       </label>
 
                       <!-- Input -->
-                      <input v-model="input.firstName" type="text" class="form-control">
+                      <input v-model="input.hospitalID" type="text" class="form-control">
                     </div>
                   </div>
                   <div class="col-12">
@@ -62,20 +62,20 @@
                     <div class="form-group">
                       <!-- Label -->
                       <label>
-                        Last Name
+                        Email
                       </label>
                       <!-- Input -->
-                      <input v-model="input.email" type="email" class="form-control">
+                      <input v-model="input.adminEmail" type="email" class="form-control">
                     </div>
                   </div><div class="col-12 col-md-6" />
                 </div> <!-- / .row -->
                 <!-- Button -->
-                <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="update()">
-                  Update Profile
+                <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="addAdmin()">
+                  Add Admin
                 </button>
-                <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3">
+                <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="addAdmin()">
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
-                  Update Profile
+                  Add Admin
                 </button>
               </form>
               <br><br>
@@ -88,30 +88,29 @@
 </template>
 
 <script>
-import Sidebar from '../components/Sidebar'
-import apiService from '../api/apiservice'
-import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
+import Hspacesidebar from '~/components/Hspacesidebar'
+import apiService from '~/api/apiservice'
+import urls from '~/api/apiUrl'
+import '~/assets/css/theme-dark.min.css'
 export default {
   components: {
-    Sidebar
+    Hspacesidebar
   },
   data () {
     return {
       input: {
-        firstName: '',
-        lastName: ''
+        adminEmail: '',
+        hospitalID: ''
       },
       isLoading: false
     }
   },
   methods: {
-    async update () {
+    async addAdmin () {
       this.isLoading = true
-      const res = await apiService.request(true, urls.UPDATEPROFILE, this.input, 'PUT')
+      const res = await apiService.request(true, urls.ADDADMIN, this.input, 'POST')
       const result = await res.json()
       if (result.statuscode === 200) {
-        apiService.setToken()
         console.log(result)
         this.isLoading = true
         this.isLoading = false

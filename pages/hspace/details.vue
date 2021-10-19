@@ -5,7 +5,7 @@
     ================================================== -->
 
       <nav id="sidebar" class="navbar navbar-vertical fixed-left navbar-expand-md ">
-        <Sidebar />
+        <Hspacesidebar />
       </nav>
       <!-- MAIN CONTENT
     ================================================== -->
@@ -130,13 +130,13 @@
 </template>
 
 <script>
-import Sidebar from '../components/Sidebar'
-import apiService from '../api/apiservice'
-import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
+import Hspacesidebar from '~/components/Hspacesidebar'
+import apiService from '~/api/apiservice'
+import urls from '~/api/apiUrl'
+import '~/assets/css/theme-dark.min.css'
 export default {
   components: {
-    Sidebar
+    Hspacesidebar
   },
   filters: {
     capitalize (value) {

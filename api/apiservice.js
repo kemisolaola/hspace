@@ -1,6 +1,6 @@
 import URLS from './apiUrl'
 
-const tokenKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZkNGFhNGJkY2Q2ZjAwMTU2Yjc2N2MiLCJpYXQiOjE2MTc3NzUyNjl9.rYGa1bFl-Ree7GYfO6o6U4qVLx4wnGR53QEmDOueHZg'
+const tokenKey = ''
 
 function getToken () {
   return localStorage.getItem(tokenKey)

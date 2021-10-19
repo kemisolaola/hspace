@@ -28,7 +28,7 @@
       <ul style="color: #013c78" class="navbar-nav">
         <li class="nav-item">
           <nuxt-link
-            to="/addadmin"
+            to="addadmin"
             class="nav-link"
             aria-controls="sidebarDashboards"
           >
@@ -37,25 +37,16 @@
         </li>
         <li class="nav-item">
           <nuxt-link
-            to="/addhospital"
+            to="hospitals"
             class="nav-link"
             aria-controls="sidebarDashboards"
           >
-            <i class="fe fe-home" /> Add Hospital
+            <i class="fe fe-home" />Hospitals
           </nuxt-link>
         </li>
         <li class="nav-item">
           <nuxt-link
-            to="/hospital"
-            class="nav-link"
-            aria-controls="sidebarDashboards"
-          >
-            <i class="fe fe-home" />Hospital
-          </nuxt-link>
-        </li>
-        <li class="nav-item">
-          <nuxt-link
-            to="/laboratory"
+            to="laboratory"
             class="nav-link"
             aria-controls="sidebarDashboards"
           >
@@ -64,7 +55,7 @@
         </li>
         <li class="nav-item">
           <nuxt-link
-            to="/pharmacy"
+            to="pharmacy"
             class="nav-link"
             aria-controls="sidebarPages"
           >

@@ -6,7 +6,7 @@
       <!-- NAVIGATION
     ================================================== -->
       <nav id="sidebar" class="navbar navbar-vertical fixed-left navbar-expand-md ">
-        <Sidebar/>
+        <Sidebar />
       </nav>
       <!-- MAIN CONTENT
     ================================================== -->
@@ -132,11 +132,11 @@
                       </label>
                       <!-- Input -->
                       <input
-                      required
-                       class="form-select form-control"
-                       v-model="input.category"
-                       @input="input.category=$event.target.value.toUpperCase()"
-                       />
+                        v-model="input.category"
+                        required
+                        class="form-select form-control"
+                        @input="input.category=$event.target.value.toUpperCase()"
+                      >
                       <!-- <input
                         v-model="input.category"
                         required
@@ -156,10 +156,11 @@
                       </label>
                       <!-- Input -->
                       <input
-                      type="number"
-                       class="form-select form-control"
-                       v-model="input.bedSpaces"
-                        aria-label="Default select example"/>
+                        v-model="input.bedSpaces"
+                        type="number"
+                        class="form-select form-control"
+                        aria-label="Default select example"
+                      >
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
@@ -182,12 +183,12 @@
                       </label>
                       <!-- Input -->
                       <input
-                      accept=".jpeg,.jpg,.png,image/jpeg,image/png"
-                       @change="addImage"
+                        accept=".jpeg,.jpg,.png,image/jpeg,image/png"
                         placeholder="Enter Image"
                         class="form-control"
                         data-toggle="flatpickr"
                         type="file"
+                        @change="addImage"
                       >
                     </div>
                   </div>
@@ -259,7 +260,7 @@ export default {
         website: '',
         email: '',
         galleryImages: [],
-        category: '',
+        category: 'HOSPITAL',
         openingHours: '',
         services: []
       },

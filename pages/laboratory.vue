@@ -7,7 +7,7 @@
     ================================================== -->
 
       <nav id="sidebar" class="navbar navbar-vertical fixed-left navbar-expand-md ">
-        <Sidebar/>
+        <Sidebar />
       </nav>
       <!-- MAIN CONTENT
     ================================================== -->
@@ -20,20 +20,18 @@
                 <div class="header-body">
                   <div class="row align-items-center">
                     <div class="col">
-                      <h6 class="header-pretitle">
-                        Most Popular
-                      </h6>
                       <!-- Title -->
                       <h1 class="header-title">
                         Laboratory
                       </h1>
                     </div>
-                    <div class="col text-right"><nuxt-link to="/addlaboratory">
-                       <button class="btn btn-secondary">
-                         Add Laboratory
-                       </button>
-                       </nuxt-link>
-                      </div>
+                    <div class="col text-right">
+                      <nuxt-link to="/addlaboratory">
+                        <button class="btn btn-secondary">
+                          Add Laboratory
+                        </button>
+                      </nuxt-link>
+                    </div>
                   </div> <!-- / .row -->
                   <div class="row align-items-center">
                     <div class="col" />
@@ -71,15 +69,15 @@
                   <!-- <div class="spinner-border" style="width: 2rem; text-align: center; height: 2rem;" role="status">
                                                 <span v-if="isLoading" class="visually-hidden"></span>
                                             </div> -->
-                  <tbody>
-                    <tr v-for="(responseData,index) in mostPopularLaboratory" :key="index">
+                  <tbody v-for="(responseData,index) in labResponseDatas" :key="index">
+                    <tr>
                       <th scope="row">
                         {{ responseData.hospitalID }}
                       </th>
                       <td>{{ responseData.name }}</td>
                       <td>{{ responseData.address.state }}</td>
                       <td>{{ responseData.address.city }}</td>
-                     <th>
+                      <th>
                         <button type="button" class="btn btn-lg btn-block btn-primary" @click="details(responseData)">
                           View
                         </button>
@@ -95,26 +93,25 @@
               </div>
               <div class="col-12">
                 <!-- Header -->
-                <div class="header mt-md-5">
+                <!-- <div class="header mt-md-5">
                   <div class="header-body">
                     <div class="row align-items-center">
                       <div class="col">
                         <h6 class="header-pretitle">
                           Recently Added
                         </h6>
-                        <!-- Title -->
                         <h1 class="header-title">
                           Laboratory
                         </h1>
                       </div>
-                    </div> <!-- / .row -->
+                    </div>
                     <div class="row align-items-center">
                       <div class="col" />
                     </div>
                   </div>
-                </div>
+                </div> -->
 
-                <table class="table table-sm table-hover table-nowrap card-table">
+                <!-- <table class="table table-sm table-hover table-nowrap card-table">
                   <thead>
                     <tr>
                       <th scope="col">
@@ -135,12 +132,9 @@
                       <th scope="col">
                         Update
                       </th>
-                      <!-- <th scope="col">
-                        Details
-                      </th> -->
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody >
                     <tr v-for="(responseData,index) in recentlyAddedLaboratory" :key="index">
                       <th scope="row">
                         {{ responseData.hospitalID }}
@@ -148,7 +142,7 @@
                       <td>{{ responseData.name }}</td>
                       <td>{{ responseData.address.state }}</td>
                       <td>{{ responseData.address.city }}</td>
-                     <th>
+                      <th>
                         <button type="button" class="btn btn-lg btn-block btn-primary" @click="details(responseData)">
                           View
                         </button>
@@ -160,7 +154,7 @@
                       </th>
                     </tr>
                   </tbody>
-                </table>
+                </table> -->
                 <br><br>
               </div>
             </div>
@@ -183,18 +177,14 @@ export default {
   data () {
     return {
       isLoading: true,
-      responseDatas: [],
-      mostPopularLaboratory: [],
-      recentlyAddedLaboratory: []
+      responseDatas: []
     }
   },
   async mounted () {
-    const res = await apiService.request(true, urls.LABORATORY, {}, 'GET')
+    const res = await apiService.request(true, urls.HOSPITAL, {}, 'GET')
     const result = await res.json()
     if (result.statuscode === 200) {
-      this.mostPopularLaboratory = result.data.mostPopular
-      this.recentlyAddedLaboratory = result.data.randomPicks
-      apiService.getToken(this.tokenKey)
+      this.responseDatas = result.data
       console.log(result)
     } else if (result.statuscode === 400) {
       alert(result.message)
@@ -228,6 +218,11 @@ export default {
       if (this.$store.state.hospitalInitData.hospitalID !== '') {
         this.$router.replace('/updatehospital')
       }
+    }
+  },
+  computed: {
+    labResponseDatas () {
+      return this.responseDatas.filter(responseData => (responseData.category === 'LABORATORY'))
     }
   }
 }

@@ -8,7 +8,7 @@
     ================================================== -->
 
       <nav id="sidebar" class="navbar navbar-vertical fixed-left navbar-expand-md ">
-       <Sidebar/>
+        <Sidebar />
       </nav>
       <!-- MAIN CONTENT
     ================================================== -->
@@ -29,12 +29,13 @@
                         Pharmacy
                       </h1>
                     </div>
-                    <div class="col text-right"><nuxt-link to="/addpharmacy">
-                       <button class="btn btn-secondary">
-                         Add Pharmacy
-                       </button>
-                       </nuxt-link>
-                      </div>
+                    <div class="col text-right">
+                      <nuxt-link to="/addpharmacy">
+                        <button class="btn btn-secondary">
+                          Add Pharmacy
+                        </button>
+                      </nuxt-link>
+                    </div>
                   </div> <!-- / .row -->
                   <div class="row align-items-center">
                     <div class="col" />
@@ -73,7 +74,7 @@
                                                 <span v-if="isLoading" class="visually-hidden"></span>
                                             </div> -->
                   <tbody>
-                    <tr v-for="(responseData,index) in mostPopularPharmarcy" :key="index">
+                    <tr v-for="(responseData,index) in pharmResponseDatas" :key="index">
                       <th scope="row">
                         {{ responseData.hospitalID }}
                       </th>
@@ -99,82 +100,6 @@
                   </tbody>
                 </table>
               </div>
-              <div class="col-12">
-                <!-- Header -->
-                <div class="header mt-md-5">
-                  <div class="header-body">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <h6 class="header-pretitle">
-                          Recently Added
-                        </h6>
-                        <!-- Title -->
-                        <h1 class="header-title">
-                          Pharmacy
-                        </h1>
-                      </div>
-                    </div> <!-- / .row -->
-                    <div class="row align-items-center">
-                      <div class="col" />
-                    </div>
-                  </div>
-                </div>
-                <div class="table-responsive">
-                  <table class="table table-sm table-hover table-nowrap card-table">
-                    <thead>
-                      <tr>
-                        <th scope="col">
-                          Pharmacy ID
-                        </th>
-                        <th scope="col">
-                          Name
-                        </th>
-                        <th scope="col">
-                          State
-                        </th>
-                        <th scope="col">
-                          City
-                        </th>
-                        <th scope="col">
-                        Pharmacy Info
-                      </th>
-                      <th scope="col">
-                        Update
-                      </th>
-                        <!-- <th scope="col">
-                          Details
-                        </th> -->
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(responseData,index) in recentlyAddedPharmarcy" :key="index">
-                        <th scope="row">
-                          {{ responseData.hospitalID }}
-                        </th>
-                        <td>{{ responseData.name }}</td>
-                        <td>{{ responseData.address.state }}</td>
-                        <td>{{ responseData.address.city }}</td>
-                        <th>
-                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="details(responseData)">
-                          View
-                        </button>
-                      </th>
-                      <th>
-                        <button type="button" class="btn btn-lg btn-block btn-primary" @click="update(responseData)">
-                          Edit
-                        </button>
-                      </th>
-                        <!-- <td>
-                          <button type="button" class="btn btn-primary btn-sm">
-                            View
-                          </button>
-                        </td> -->
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <br><br>
-              </div>
             </div>
           </div> <!-- / .row -->
         </div>
@@ -198,6 +123,18 @@ export default {
       responseDatas: [],
       mostPopularPharmarcy: [],
       recentlyAddedPharmarcy: []
+    }
+  },
+  async mounted () {
+    const res = await apiService.request(true, urls.HOSPITAL, {}, 'GET')
+    const result = await res.json()
+    if (result.statuscode === 200) {
+      this.responseDatas = result.data
+      apiService.getToken(this.tokenKey)
+      console.log(result)
+    } else if (result.statuscode === 400) {
+      alert(result.message)
+      console.log(result)
     }
   },
   methods: {
@@ -232,18 +169,9 @@ export default {
       }
     }
   },
-  async mounted () {
-    const res = await apiService.request(true, urls.PHARMACY, {}, 'GET')
-    const result = await res.json()
-    if (result.statuscode === 200) {
-      this.responseDatas = result.data
-      this.mostPopularPharmarcy = result.data.mostPopular
-      this.recentlyAddedPharmarcy = result.data.randomPicks
-      apiService.getToken(this.tokenKey)
-      console.log(result)
-    } else if (result.statuscode === 400) {
-      alert(result.message)
-      console.log(result)
+  computed: {
+    pharmResponseDatas () {
+      return this.responseDatas.filter(responseData => (responseData.category === 'PHARMACY'))
     }
   }
 }

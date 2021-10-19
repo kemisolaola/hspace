@@ -6,8 +6,8 @@
       <div class="row justify-content-center">
         <div class="col-12 col-md-5 col-xl-4 my-7">
           <h1 class="display-4 text-center mb-3">
-            <img class="justify-content-center text-center mx-auto" width="200px" height="60px" src="Hspace.png">
-            Reset Password
+            <img class="justify-content-center text-center mx-auto" width="200px" height="60px" src="/Hspace.png">
+           <br> Reset Password
           </h1>          <!-- Form -->
           <form>
             <!-- Email address -->
@@ -23,13 +23,9 @@
               <!-- Input -->
               <input class="form-control" placeholder="new password">
             </div>
-            <button v-if="!isLoading" class="btn btn-lg btn-block btn-primary mb-3">
+            <button type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="validate()">
               Reset Password
             </button>
-            <button v-if="isLoading" class="btn btn-lg btn-block btn-primary mb-3">
-                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
-                  Reset Password
-                              </button>
             <!-- Link -->
             <div class="text-center">
               <small class="text-muted text-center">
@@ -44,9 +40,9 @@
 </template>
 
 <script>
-import apiService from '../api/apiservice'
-import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
+import apiService from '~/api/apiservice'
+import urls from '~/api/apiUrl'
+import '~/assets/css/theme-dark.min.css'
 
 export default {
   data () {
@@ -66,7 +62,7 @@ export default {
       if (result.statuscode === 200) {
         this.isLoading = false
         console.log(result)
-        this.$router.replace('/signinadmin')
+        this.$router.replace('/hspace/signin')
       } else if (result.statuscode === 400) {
         alert(result.message)
       }

@@ -6,9 +6,7 @@
     <h1 v-if="error.statusCode === 400">
       {{ networkProblem }}
     </h1>
-    <NuxtLink to="/">
-      Home page
-    </NuxtLink>
+   <p class="text-center">An error occured while fetching data, please refresh page</p>
   </v-app>
 </template>
 

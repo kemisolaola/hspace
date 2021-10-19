@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
       <div class="col-12 col-md-5 col-xl-4 my-7">
         <h1 class="display-4 text-center mb-3">
-          <img class="justify-content-center text-center mx-auto" width="200px" height="60px" src="Hspace.png">
+          <img class="justify-content-center text-center mx-auto" width="200px" height="60px" src="/Hspace.png">
           <br><br> Sign in
         </h1>
         <!-- Form -->
@@ -45,17 +45,17 @@
             </nuxt-link>
           </div>
           <!-- Submit -->
-          <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="signin">
+          <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="signin()">
             Sign in
           </button>
-          <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="signup()">
+          <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
             Sign in
           </button>
           <!-- Link -->
           <div class="text-center">
             <small class="text-muted text-center">
-              Don't have an account yet? <nuxt-link to="/">Sign up</nuxt-link>.
+              Don't have an account yet? <nuxt-link to="/hspace">Sign up</nuxt-link>.
             </small>
           </div>
         </form>
@@ -65,9 +65,9 @@
 </template>
 
 <script>
-import apiService from '../api/apiservice'
-import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
+import apiService from '~/api/apiservice'
+import urls from '~/api/apiUrl'
+import '~/assets/css/theme-dark.min.css'
 export default {
   data () {
     return {
@@ -83,14 +83,14 @@ export default {
   methods: {
     async signin () {
       this.isLoading = true
-      const res = await apiService.request(false, urls.SIGNINADMIN, this.input, 'POST')
+      const res = await apiService.request(false, urls.SIGNINSUPERADMIN, this.input, 'POST')
       const result = await res.json()
       if (result.statuscode === 200) {
         apiService.setToken(result.data.token)
         this.isLoading = false
         console.log(result)
-        console.log('this is ' + apiService.getToken())
-        this.$router.replace('/hospital')
+        console.log('this is' + apiService.getToken())
+        this.$router.replace('/hspace/hospitals')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)

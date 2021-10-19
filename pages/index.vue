@@ -32,22 +32,22 @@
             <!-- Label -->
             <div class="row">
               <div class="col">
-            <label>
-              Password
-            </label>
+                <label>
+                  Password
+                </label>
               </div>
               <div class="col-auto">
-               <a to="" @click="showPassword()" class="form-text small">
-                  {{text}}
+                <a to="" class="form-text small" @click="showPassword()">
+                  {{ text }}
                 </a>
               </div>
             </div>
-                <!-- Help text -->
-                 <!-- Input group -->
+            <!-- Help text -->
+            <!-- Input group -->
             <div class="input-group input-group-merge">
               <!-- Input -->
-              <input v-model="input.password"  :type="type" class="form-control" placeholder="Enter your password">
-              </div>
+              <input v-model="input.password" :type="type" class="form-control" placeholder="Enter your password">
+            </div>
           </div>
           <!-- Submit -->
           <button v-if="!isLoading" type="submit" class="btn btn-lg btn-block btn-primary mb-3" @click="signup()">

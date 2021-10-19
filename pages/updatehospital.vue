@@ -2,7 +2,7 @@
   <div>
     <div>
       <nav id="sidebar" class="navbar navbar-vertical fixed-left navbar-expand-md ">
-        <Sidebar/>
+        <Sidebar />
       </nav>
       <!-- MAIN CONTENT
     ================================================== -->
@@ -41,8 +41,8 @@
                     </div> <!-- / .row -->
                   </div>
                 </div> <!-- / .row -->
-                 <div class="row">
-                    <div class="col-12">
+                <div class="row">
+                  <div class="col-12">
                     <!-- Hospital name name -->
                     <div class="form-group">
                       <!-- Label -->
@@ -56,7 +56,7 @@
                   </div>
                   <div class="col-12 col-md-6">
                     <div class="form-group">
-                       <label>
+                      <label>
                         State
                       </label>
                       <input v-model="state" type="text" class="form-control">
@@ -64,13 +64,13 @@
                   </div>
                   <div class="col-12 col-md-6">
                     <div class="form-group">
-                       <label>
+                      <label>
                         City
                       </label>
                       <input v-model="city" type="text" class="form-control">
                     </div>
                   </div>
-                   <div class="col-12  col-md-6">
+                  <div class="col-12  col-md-6">
                     <div class="form-group">
                       <label>
                         Street
@@ -139,10 +139,10 @@
                       </label>
                       <input
                         accept=".jpeg,.jpg,.png,image/jpeg,image/png"
-                       @change="addImage"
                         class="form-control"
                         data-toggle="flatpickr"
                         type="file"
+                        @change="addImage"
                       >
                     </div>
                   </div>
@@ -172,14 +172,14 @@
                         type="text"
                         class="form-control"
                       >
-                  </div>
+                    </div>
                   </div>
                   <div v-for="(servicesOpt, index) in servicesOption" :key="index" class="col-12 col-md-6">
                     <div class="form-group">
-                       <label>
+                      <label>
                         Services
                       </label>
-                       <input
+                      <input
                         v-model="servicesOption[index]"
                         class="form-control"
                       >

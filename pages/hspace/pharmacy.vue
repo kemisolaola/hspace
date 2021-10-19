@@ -6,7 +6,7 @@
       <!-- NAVIGATION
     ================================================== -->
       <nav id="sidebar" class="navbar navbar-vertical fixed-left navbar-expand-md ">
-        <Sidebar />
+        <Hspacesidebar />
       </nav>
       <!-- MAIN CONTENT
     ================================================== -->
@@ -21,15 +21,8 @@
                     <div class="col">
                       <!-- Title -->
                       <h1 class="header-title">
-                        Hospital
+                        Pharmacy
                       </h1>
-                    </div>
-                    <div class="col text-right">
-                      <nuxt-link to="/addhospitalbranch">
-                        <button class="btn btn-secondary">
-                          Add Hospital
-                        </button>
-                      </nuxt-link>
                     </div>
                   </div> <!-- / .row -->
                   <div class="row align-items-center">
@@ -41,7 +34,7 @@
                 <thead>
                   <tr>
                     <th scope="col">
-                      Hospital ID
+                      Pharm ID
                     </th>
                     <th scope="col">
                       Name
@@ -56,7 +49,7 @@
                       Hospital Info
                     </th>
                     <th scope="col">
-                      Update
+                      activate
                     </th>
                   </tr>
                 </thead>
@@ -64,7 +57,7 @@
                             <span v-if="isLoading" class="visually-hidden"></span>
                         </div> -->
                 <tbody>
-                  <tr v-for="(responseData,index) in hospitalResponseDatas" :key="index">
+                  <tr v-for="(responseData,index) in pharmacyList" :key="index">
                     <th scope="row">
                       {{ responseData.hospitalID }}
                     </th>
@@ -81,8 +74,15 @@
                       </button>
                     </th>
                     <th>
-                      <button type="button" class="btn btn-lg btn-block btn-primary" @click="edit(responseData)">
-                        Edit
+                      <button v-if="responseData.active == false && isLoading == false" type="button" class="btn btn-lg btn-block btn-primary" @click="activate(responseData._id)">
+                        Activate
+                      </button>
+                      <button v-if="isLoading == true && responseData.active == false" type="button" class="btn btn-lg btn-block btn-primary">
+                        Actiivate
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
+                      </button>
+                      <button v-if="(responseData.active == true || activated == true)" type="button" class="btn btn-lg btn-block btn-secondary">
+                        Activated
                       </button>
                     </th>
                     <!-- <th>
@@ -103,13 +103,13 @@
 </template>
 
 <script>
-import Sidebar from '../components/Sidebar'
-import apiService from '../api/apiservice'
-import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
+import Hspacesidebar from '~/components/Hspacesidebar'
+import apiService from '~/api/apiservice'
+import urls from '~/api/apiUrl'
+import '~/assets/css/theme-dark.min.css'
 export default {
   components: {
-    Sidebar
+    Hspacesidebar
   },
   data () {
     return {
@@ -117,12 +117,13 @@ export default {
       mostPopularHospital: [],
       recentlyAddedHospital: [],
       isLoading: false,
-      searchQuery: null
+      searchQuery: null,
+      activated: false
     }
   },
   async mounted () {
     this.isLoading = false
-    const res = await apiService.request(true, urls.HOSPITAL)
+    const res = await apiService.request(true, urls.GETALLHOSPITAL)
     const result = await res.json()
     this.responseDatas = result.data
     this.isLoading = false
@@ -136,28 +137,30 @@ export default {
     }
   },
   methods: {
-    // async del (id) {
-    //   this.isLoading = false
-    //   const res = await apiService.request(true, urls.GETHOSPITAL + id, {}, 'DELETE')
-    //   const result = await res.json()
-    //   this.responseDatas = result.data
-    //   this.isLoading = false
-    //   if (result.statuscode === 200) {
-    //     this.isLoading = false
-    //     console.log(result)
-    //   } else if (result.statuscode === 400) {
-    //     alert(result.message)
-    //     console.log(result)
-    //     this.isLoading = true
-    //   }
-    // },
+    async activate (id) {
+      this.isLoading = true
+      const res = await apiService.request(true, urls.ACTIVATEHOSPITAL + id, {}, 'GET')
+      const result = await res.json()
+      this.responseDatas = result.data
+      this.isLoading = false
+      if (result.statuscode === 200) {
+        this.isLoading = false
+        this.activated = true
+        this.$router.go()
+        console.log(result)
+      } else if (result.statuscode === 400) {
+        alert(result.message)
+        console.log(result)
+        this.isLoading = true
+      }
+    },
     details (getData) {
       console.log(getData.hospitalID)
       const storeObj = {}
       storeObj._id = getData._id
       this.$store.commit('saveHospitalData', storeObj)
       if (this.$store.state.hospitalInitData.hospitalID !== '') {
-        this.$router.replace('/details')
+        this.$router.replace('/hspace/details')
       }
     },
     edit (getData) {
@@ -189,8 +192,8 @@ export default {
     // }
   },
   computed: {
-    hospitalResponseDatas () {
-      return this.responseDatas.filter(responseData => (responseData.category === 'HOSPITAL'))
+    pharmacyList () {
+      return this.responseDatas.filter(responseData => responseData.category === 'PHARMACY')
     }
   }
 }

@@ -66,9 +66,9 @@ export default {
   },
   cloudinary: {
     // cloudinary.utils.api_sign_request(params_to_sign, api_secret)
-    cloudName: "kemisolaola",
-    apiKey: "297187167734652",
-    apiSecret: "5BUxbxmZvMOLvf4aXbw-5Jwme3g"        
+    cloudName: 'kemisolaola',
+    apiKey: '297187167734652',
+    apiSecret: '5BUxbxmZvMOLvf4aXbw-5Jwme3g'
   },
   target: 'static'
 }

@@ -5,22 +5,21 @@
     <div class="row justify-content-center">
       <div class="col-12 col-md-5 col-xl-4 my-7">
         <h1 class="display-4 text-center mb-3">
-          <img class="justify-content-center text-center mx-auto" width="200px" height="60px" src="Hspace.png">
-          <br> <br>Reset Password
+          Validate Token
         </h1>
         <!-- Form -->
         <form>
           <!-- Email address -->
           <div class="form-group">
             <!-- Label -->
-            <label>Email Address</label>
+            <label>Token</label>
             <!-- Input -->
-            <input v-model="input.email" type="email" class="form-control" placeholder="name@address.com">
+            <input v-model="input.token" type="email" class="form-control" placeholder="token">
           </div>
           <!-- Password -->
           <!-- Submit -->
-          <button type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="reset()">
-            Reset
+          <button type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="validate ()">
+            Validate Token
           </button>
           <!-- Link -->
         </form>
@@ -30,25 +29,25 @@
 </template>
 
 <script>
-import apiService from '../api/apiservice'
-import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
+import apiService from '~/api/apiservice'
+import urls from '~/api/apiUrl'
+import '~/assets/css/theme-dark.min.css'
 
 export default {
   data () {
     return {
       input: {
-        email: ''
+        token: ''
       }
     }
   },
   methods: {
-    async reset () {
-      const res = await apiService.request(true, urls.RESETPASSWORDREQADMIN, this.input, 'POST')
+    async validate () {
+      const res = await apiService.request(true, urls.VALIDATETOKENADMIN, this.input, 'POST')
       const result = await res.json()
       if (result.statuscode === 200) {
         console.log(result)
-        this.$router.replace('/validatetokenadmin')
+        this.$router.replace('/hspace/resetpasswordadmin')
       } else if (result.statuscode === 400) {
         alert(result.message)
       }

@@ -5,7 +5,7 @@
     ================================================== -->
 
       <nav id="sidebar" class="navbar navbar-vertical fixed-left navbar-expand-md ">
-        <Sidebar/>
+        <Sidebar />
       </nav>
       <!-- MAIN CONTENT
     ================================================== -->
@@ -50,11 +50,11 @@
                     <div class="form-group">
                       <!-- Label -->
                       <label>
-                        Hospital Name
+                        Hospital ID
                       </label>
 
                       <!-- Input -->
-                      <input v-model="input.hospital" type="text" class="form-control">
+                      <input v-model="input.hospitalID" type="text" class="form-control">
                     </div>
                   </div>
                   <div class="col-12">
@@ -65,7 +65,7 @@
                         Email
                       </label>
                       <!-- Input -->
-                      <input v-model="input.email" type="email" class="form-control">
+                      <input v-model="input.adminEmail" type="email" class="form-control">
                     </div>
                   </div><div class="col-12 col-md-6" />
                 </div> <!-- / .row -->
@@ -99,8 +99,8 @@ export default {
   data () {
     return {
       input: {
-        email: '',
-        hospital: ''
+        adminEmail: '',
+        hospitalID: ''
       },
       isLoading: false
     }

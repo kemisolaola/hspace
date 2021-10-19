@@ -6,7 +6,7 @@
       <!-- NAVIGATION
     ================================================== -->
       <nav id="sidebar" class="navbar navbar-vertical fixed-left navbar-expand-md ">
-        <Sidebar/>
+        <Sidebar />
       </nav>
       <!-- MAIN CONTENT
     ================================================== -->
@@ -132,11 +132,12 @@
                       </label>
                       <!-- Input -->
                       <input
-                      placeholder="Hospital,Pharmacy or Laboratory "
-                       class="form-select form-control"
-                       v-model="input.category"
-                       @input="input.category=$event.target.value.toUpperCase()"
-                        aria-label="Default select example"/>
+                        v-model="input.category"
+                        placeholder="Hospital,Pharmacy or Laboratory "
+                        class="form-select form-control"
+                        aria-label="Default select example"
+                        @input="input.category=$event.target.value.toUpperCase()"
+                      >
                       <!-- <input
                         v-model="input.category"
                         required
@@ -156,9 +157,10 @@
                       </label>
                       <!-- Input -->
                       <input
-                       class="form-select form-control"
-                       v-model="input.bedSpaces"
-                        aria-label="Default select example"/>
+                        v-model="input.bedSpaces"
+                        class="form-select form-control"
+                        aria-label="Default select example"
+                      >
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
@@ -170,12 +172,13 @@
                       </label>
                       <!-- Input -->
                       <input
-                       placeholder="12AM - 3PM"
-                       v-model="input.openingHours"
-                       required
+                        v-model="input.openingHours"
+                        placeholder="12AM - 3PM"
+                        required
                         type="text"
                         class="form-control"
-                        data-toggle="flatpickr">
+                        data-toggle="flatpickr"
+                      >
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
@@ -198,12 +201,12 @@
                       </label>
                       <!-- Input -->
                       <input
-                      accept=".jpeg,.jpg,.png,image/jpeg,image/png"
-                       @change="addImage"
+                        accept=".jpeg,.jpg,.png,image/jpeg,image/png"
                         placeholder="Enter Image url"
                         class="form-control"
                         data-toggle="flatpickr"
                         type="file"
+                        @change="addImage"
                       >
                     </div>
                   </div>
@@ -275,7 +278,7 @@ export default {
         website: '',
         email: '',
         galleryImages: [],
-        category: '',
+        category: 'HOSPITAL',
         openingHours: '',
         services: []
       },

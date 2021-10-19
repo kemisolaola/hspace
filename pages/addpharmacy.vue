@@ -6,7 +6,7 @@
       <!-- NAVIGATION
     ================================================== -->
       <nav id="sidebar" class="navbar navbar-vertical fixed-left navbar-expand-md ">
-        <Sidebar/>
+        <Sidebar />
       </nav>
       <!-- MAIN CONTENT
     ================================================== -->
@@ -51,7 +51,7 @@
                     <div class="form-group">
                       <!-- Label -->
                       <label>
-                        Hospital Name
+                        Pharmacy Name
                       </label>
 
                       <!-- Input -->
@@ -132,10 +132,11 @@
                       </label>
                       <!-- Input -->
                       <input
-                       class="form-select form-control"
-                       v-model="input.category"
-                       @input="input.category=$event.target.value.toUpperCase()"
-                        aria-label="Default select example"/>
+                        v-model="input.category"
+                        class="form-select form-control"
+                        aria-label="Default select example"
+                        @input="input.category=$event.target.value.toUpperCase()"
+                      >
                       <!-- <input
                         v-model="input.category"
                         required
@@ -166,12 +167,12 @@
                       </label>
                       <!-- Input -->
                       <input
-                      accept=".jpeg,.jpg,.png,image/jpeg,image/png"
-                       @change="addImage"
+                        accept=".jpeg,.jpg,.png,image/jpeg,image/png"
                         placeholder="Enter Image url"
                         class="form-control"
                         data-toggle="flatpickr"
                         type="file"
+                        @change="addImage"
                       >
                     </div>
                   </div>
@@ -185,11 +186,11 @@
                   Add Images
                 </button>
                 <button v-if="!isLoading" type="submit" class="btn btn-lg btn-block btn-primary mb-3" @click="addHospital()">
-                  Add Hospital
+                  Add Pharmacy
                 </button>
                 <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3">
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
-                  Add Hospital
+                  Add Pharmacy
                 </button>
               </form>
               <br><br>
@@ -225,7 +226,7 @@ export default {
         website: '',
         email: '',
         galleryImages: [],
-        category: '',
+        category: 'PHARMACY',
         openingHours: ''
       },
       imagesOption: []
@@ -272,7 +273,7 @@ export default {
       const res = await apiService.request(true, urls.ADDHOSPITAL, this.input, 'POST')
       const result = await res.json()
       if (result.statuscode === 200) {
-        this.$router.replace('/homeadmin')
+        this.$router.replace('/pharmacy')
         console.log(result)
       } else if (result.statuscode === 400) {
         this.isLoading = false
