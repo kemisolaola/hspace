@@ -69,6 +69,5 @@ export default {
     cloudName: 'kemisolaola',
     apiKey: '297187167734652',
     apiSecret: '5BUxbxmZvMOLvf4aXbw-5Jwme3g'
-  },
-  target: 'static'
+  }
 }
