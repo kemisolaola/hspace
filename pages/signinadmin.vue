@@ -86,10 +86,10 @@ export default {
       const res = await apiService.request(false, urls.SIGNINADMIN, this.input, 'POST')
       const result = await res.json()
       if (result.statuscode === 200) {
-        apiService.setToken(result.data.token)
+        apiService.setToken('ADMIN_TOKEN', result.data.token)
         this.isLoading = false
         console.log(result)
-        console.log('this is ' + apiService.getToken())
+        console.log('this is ' + apiService.getToken('ADMIN_TOKEN'))
         this.$router.replace('/hospital')
       } else if (result.statuscode === 400) {
         this.isLoading = false

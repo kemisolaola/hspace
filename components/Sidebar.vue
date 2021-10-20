@@ -71,12 +71,20 @@
             <i class="fe fe-file" />Pharmacy
           </nuxt-link>
         </li>
+        <li @click="logout()" class="nav-item">
+            <a
+            class="nav-link"
+            aria-controls="sidebarPages">
+             <i class="fe fe-file" />Logout
+            </a>
+        </li>
       </ul>
     </div> <!-- / .navbar-collapse -->
   </div>
 </template>
 
 <script>
+import apiService from '~/api/apiservice'
 import '../assets/css/theme-dark.min.css'
 export default {
   data () {
@@ -87,6 +95,11 @@ export default {
   methods: {
     toggleNavbar () {
       this.show = !this.show
+    },
+    logout () {
+      apiService.logOut('ADMIN_TOKEN')
+      this.$router.replace('signinadmin')
+      console.log('logged')
     }
   }
 }

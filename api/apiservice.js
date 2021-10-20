@@ -1,16 +1,18 @@
 import URLS from './apiUrl'
 
-const tokenKey = ''
-
-function getToken () {
+function getToken (tokenKey) {
   return localStorage.getItem(tokenKey)
 }
 
-function setToken (token) {
+function logOut (tokenKey) {
+  return localStorage.removeItem(tokenKey)
+}
+
+function setToken (tokenKey, token) {
   localStorage.setItem(tokenKey, token)
 }
-const request = function (hasToken = false, url, requestBody, method) {
-  const token = getToken() // get the token
+const request = function (hasToken = false, url, requestBody, method, tokenKey = 'ADMIN_KEY') {
+  const token = getToken(tokenKey) // get the token
   let headerDetails = {
     'Content-Type': 'application/json',
     'x-auth-token': token,
@@ -50,5 +52,6 @@ const request = function (hasToken = false, url, requestBody, method) {
 export default {
   request,
   getToken,
-  setToken
+  setToken,
+  logOut
 }

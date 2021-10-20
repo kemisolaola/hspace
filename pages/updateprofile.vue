@@ -108,7 +108,7 @@ export default {
   methods: {
     async update () {
       this.isLoading = true
-      const res = await apiService.request(true, urls.UPDATEPROFILE, this.input, 'PUT')
+      const res = await apiService.request(true, urls.UPDATEPROFILE, this.input, 'PUT', 'ADMIN_TOKEN')
       const result = await res.json()
       if (result.statuscode === 200) {
         apiService.setToken()

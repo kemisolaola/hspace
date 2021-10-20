@@ -113,7 +113,15 @@
                       <label>
                         No of Bed Spaces
                       </label>
-                      <input v-model="input.bedSpaces" type="text" class="form-control" data-mask="(000) 000-0000">
+                      <input v-model="input.bedSpaces" type="number" class="form-control" >
+                    </div>
+                  </div>
+                  <div v-if="input.category == 'HOSPITAL'" class="col-12 col-md-6">
+                    <div class="form-group">
+                      <label>
+                        Available Bed Spaces
+                      </label>
+                      <input v-model="input.availableBedSpaces" type="number" class="form-control" data-mask="(000) 000-0000">
                     </div>
                   </div>
                   <!-- <div v-if="input.category == 'HOSPITAL'" class="col-12 col-md-6">
@@ -151,8 +159,10 @@
                       <label>
                         Parent Hospital
                       </label>
-                      <input v-model="input.parentHospital" type="text" class="form-control" data-mask="(000) 000-0000">
-                    </div>
+                            <select v-model="input.parentHospital" class="form-select form-control" style="width: 100%; height: 35px" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option v-for="(name, index) in responseDatas" :key="index" :value='name._id'>{{name.name}}</option>
+                           </select>                    </div>
                   </div>
                   <div class="col-12 col-md-6">
                     <div class="form-group">
@@ -252,6 +262,7 @@ export default {
   data () {
     return {
       tokenKey: '',
+      responseDatas: [],
       hospital: this.$store.state.hospitalInitData._id,
       input: [],
       city: '',
@@ -269,7 +280,13 @@ export default {
   // },
   async mounted () {
     console.log(this.hospital)
-    const res = await apiService.request(true, urls.GETHOSPITAL + this.hospital)
+    const response = await apiService.request(true, urls.HOSPITAL, {}, 'GET', 'ADMIN_TOKEN')
+    const resultResponse = await response.json()
+    if (resultResponse.statuscode === 200) {
+      console.log(resultResponse)
+      this.responseDatas = resultResponse.data
+    }
+    const res = await apiService.request(true, urls.GETHOSPITAL + this.hospital, {}, 'GET', 'ADMIN_TOKEN')
     const result = await res.json()
     if (result.statuscode === 200) {
       this.input = result.data
@@ -322,11 +339,10 @@ export default {
       this.input.address.state = this.state
       this.input.address.city = this.city
       this.input.address.street = this.city
-      console.log(this.input.address.city + ' new adder')
       // this.input.address = this.address
       // console.log('new' + this.input.address)
       // this.input.galleryImages.push(this.imagesurl)
-      const res = await apiService.request(true, urls.UPDATEHOSPITAL + this.hospital, this.input, 'PUT')
+      const res = await apiService.request(true, urls.UPDATEHOSPITAL + this.hospital, this.input, 'PUT', 'ADMIN_TOKEN')
       const result = await res.json()
       result.data.address = this.address
       if (result.statuscode === 200) {

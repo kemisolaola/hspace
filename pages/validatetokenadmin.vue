@@ -41,6 +41,9 @@ export default {
       }
     }
   },
+  mounted () {
+    alert('Password Reset Token sent to your registered email, Kindly use this  token')
+  },
   methods: {
     async validate () {
       const res = await apiService.request(true, urls.VALIDATETOKENADMIN, this.input, 'POST')

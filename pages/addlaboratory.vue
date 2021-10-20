@@ -295,7 +295,7 @@ export default {
       this.input.galleryImages.push(...this.imagesOption)
       // this.input.galleryImages.push(...this.imageUrl)
       console.log(this.input.galleryImages)
-      const res = await apiService.request(true, urls.ADDHOSPITAL, this.input, 'POST')
+      const res = await apiService.request(true, urls.ADDHOSPITAL, this.input, 'POST', 'ADMIN_TOKEN')
       const result = await res.json()
       console.log(this.input.services)
       if (result.statuscode === 200) {

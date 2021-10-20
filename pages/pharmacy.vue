@@ -21,10 +21,6 @@
                 <div class="header-body">
                   <div class="row align-items-center">
                     <div class="col">
-                      <!-- Title -->
-                      <h6 class="header-pretitle">
-                        Most Popular
-                      </h6>
                       <h1 class="header-title">
                         Pharmacy
                       </h1>
@@ -126,7 +122,7 @@ export default {
     }
   },
   async mounted () {
-    const res = await apiService.request(true, urls.HOSPITAL, {}, 'GET')
+    const res = await apiService.request(true, urls.HOSPITAL, {}, 'GET', 'ADMIN_TOKEN')
     const result = await res.json()
     if (result.statuscode === 200) {
       this.responseDatas = result.data

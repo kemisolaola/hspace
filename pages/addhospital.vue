@@ -152,11 +152,27 @@
                     <div class="form-group">
                       <!-- Label -->
                       <label>
-                        Available BedSpaces
+                        BedSpaces
                       </label>
                       <!-- Input -->
                       <input
                         v-model="input.bedSpaces"
+                        type="number"
+                        class="form-select form-control"
+                        aria-label="Default select example"
+                      >
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <!-- Birthday -->
+                    <div class="form-group">
+                      <!-- Label -->
+                      <label>
+                        Available BedSpaces
+                      </label>
+                      <!-- Input -->
+                      <input
+                        v-model="input.availableBedSpaces"
                         type="number"
                         class="form-select form-control"
                         aria-label="Default select example"
@@ -266,7 +282,8 @@ export default {
       },
       servicesOption: [],
       imagesOption: [],
-      bedSpaces: ''
+      bedSpaces: '',
+      aavilableBedSpaces: ''
     }
   },
   mounted () {
@@ -312,7 +329,7 @@ export default {
       // this.input.galleryImages.push(...this.imagesOption)
       // this.input.galleryImages.push(...this.imageUrl)
       console.log(this.input.galleryImages)
-      const res = await apiService.request(true, urls.ADDHOSPITAL, this.input, 'POST')
+      const res = await apiService.request(true, urls.ADDHOSPITAL, this.input, 'POST', 'ADMIN_TOKEN')
       const result = await res.json()
       console.log(this.input.services)
       if (result.statuscode === 200) {

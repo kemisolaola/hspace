@@ -122,7 +122,7 @@ export default {
   },
   async mounted () {
     this.isLoading = false
-    const res = await apiService.request(true, urls.HOSPITAL)
+    const res = await apiService.request(true, urls.HOSPITAL, {}, 'GET', 'ADMIN_TOKEN')
     const result = await res.json()
     this.responseDatas = result.data
     this.isLoading = false

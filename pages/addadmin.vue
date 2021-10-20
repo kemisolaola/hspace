@@ -50,13 +50,19 @@
                     <div class="form-group">
                       <!-- Label -->
                       <label>
-                        Hospital ID
+                        Hospital Name
                       </label>
-
                       <!-- Input -->
-                      <input v-model="input.hospitalID" type="text" class="form-control">
                     </div>
                   </div>
+                    <div class="col-12 mb-4">
+                    <!-- Last name -->
+                      <!-- Label -->
+                      <select v-model="input.hospitalID" class="form-control form-select" style="width: 100%; height: 35px" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option v-for="(name, index) in responseDatas" :key="index" :value='name._id'>{{name.name}}</option>
+                           </select>
+                    </div>
                   <div class="col-12">
                     <!-- Last name -->
                     <div class="form-group">
@@ -102,13 +108,26 @@ export default {
         adminEmail: '',
         hospitalID: ''
       },
-      isLoading: false
+      isLoading: false,
+      responseDatas: []
+    }
+  },
+  async mounted () {
+    const res = await apiService.request(true, urls.HOSPITAL, {}, 'GET', 'ADMIN_TOKEN')
+    const result = await res.json()
+    if (result.statuscode === 200) {
+      this.responseDatas = result.data
+      apiService.getToken(this.tokenKey)
+      console.log(result)
+    } else if (result.statuscode === 400) {
+      alert(result.message)
+      console.log(result)
     }
   },
   methods: {
     async addAdmin () {
       this.isLoading = true
-      const res = await apiService.request(true, urls.ADDADMIN, this.input, 'POST')
+      const res = await apiService.request(true, urls.ADDADMIN, this.input, 'POST', 'ADMIN_TOKEN')
       const result = await res.json()
       if (result.statuscode === 200) {
         console.log(result)

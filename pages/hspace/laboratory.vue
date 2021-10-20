@@ -122,7 +122,7 @@ export default {
   },
   async mounted () {
     this.isLoading = false
-    const res = await apiService.request(true, urls.GETALLHOSPITAL)
+    const res = await apiService.request(true, urls.GETALLHOSPITAL, {}, 'GET', 'SUPERADMIN_TOKEN')
     const result = await res.json()
     this.responseDatas = result.data
     this.isLoading = false
@@ -138,7 +138,7 @@ export default {
   methods: {
     async activate (id) {
       this.isLoading = true
-      const res = await apiService.request(true, urls.ACTIVATEHOSPITAL + id, {}, 'GET')
+      const res = await apiService.request(true, urls.ACTIVATEHOSPITAL + id, {}, 'GET', 'SUPERADMIN_TOKEN')
       const result = await res.json()
       this.responseDatas = result.data
       this.isLoading = false

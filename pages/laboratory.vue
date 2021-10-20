@@ -56,7 +56,7 @@
                         City
                       </th>
                       <th scope="col">
-                        Laboratory Info
+                        Lab Info
                       </th>
                       <th scope="col">
                         Update
@@ -181,7 +181,7 @@ export default {
     }
   },
   async mounted () {
-    const res = await apiService.request(true, urls.HOSPITAL, {}, 'GET')
+    const res = await apiService.request(true, urls.HOSPITAL, {}, 'GET', 'ADMIN_TOKEN')
     const result = await res.json()
     if (result.statuscode === 200) {
       this.responseDatas = result.data

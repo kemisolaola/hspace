@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import apiService from '~/api/apiservice'
 import '../assets/css/theme-dark.min.css'
 export default {
   data () {
@@ -78,6 +79,11 @@ export default {
   methods: {
     toggleNavbar () {
       this.show = !this.show
+    },
+    logout () {
+      apiService.logOut('SUPERADMIN_TOKEN')
+      this.$router.replace('signinadmin')
+      console.log('logged')
     }
   }
 }

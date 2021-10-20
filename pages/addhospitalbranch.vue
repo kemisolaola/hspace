@@ -168,6 +168,21 @@
                     <div class="form-group">
                       <!-- Label -->
                       <label>
+                        Available Bed Spaces
+                      </label>
+                      <!-- Input -->
+                      <input
+                        v-model="input.availableBedSpaces"
+                        class="form-select form-control"
+                        aria-label="Default select example"
+                      >
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <!-- Birthday -->
+                    <div class="form-group">
+                      <!-- Label -->
+                      <label>
                         Opening Hours
                       </label>
                       <!-- Input -->
@@ -189,7 +204,10 @@
                         Parent Hospital
                       </label>
                       <!-- Input -->
-                      <input v-model="input.parentHospital" type="text" class="form-control" data-mask="(000) 000-0000">
+                      <select v-model="input.parentHospital" class="form-select form-control" style="width: 100%; height: 35px" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option v-for="(name, index) in responseDatas" :key="index" :value='name._id'>{{name.name}}</option>
+                           </select>
                     </div>
                   </div>
                   <div v-for="(i, index) in imagesOption.length" :key="index" class="col-12 col-md-6">
@@ -266,6 +284,7 @@ export default {
   data () {
     return {
       image: '',
+      responseDatas: [],
       isLoading: false,
       input: {
         name: '',
@@ -284,12 +303,24 @@ export default {
       },
       servicesOption: [],
       imagesOption: [],
-      bedSpaces: ''
+      bedSpaces: '',
+      availableBedSpaces: '',
+      parentHospital: ''
     }
   },
-  mounted () {
+  async mounted () {
     this.servicesOption.push('')
     this.imagesOption.push('')
+    const res = await apiService.request(true, urls.HOSPITAL, {}, 'GET', 'ADMIN_TOKEN')
+    const result = await res.json()
+    if (result.statuscode === 200) {
+      this.responseDatas = result.data
+      apiService.getToken(this.tokenKey)
+      console.log(result)
+    } else if (result.statuscode === 400) {
+      alert(result.message)
+      console.log(result)
+    }
   },
   methods: {
     addServices () {

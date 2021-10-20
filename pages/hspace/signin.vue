@@ -86,7 +86,7 @@ export default {
       const res = await apiService.request(false, urls.SIGNINSUPERADMIN, this.input, 'POST')
       const result = await res.json()
       if (result.statuscode === 200) {
-        apiService.setToken(result.data.token)
+        apiService.setToken('SUPERADMIN_TOKEN', result.data.token)
         this.isLoading = false
         console.log(result)
         console.log('this is' + apiService.getToken())
