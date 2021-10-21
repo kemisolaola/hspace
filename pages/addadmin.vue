@@ -55,14 +55,18 @@
                       <!-- Input -->
                     </div>
                   </div>
-                    <div class="col-12 mb-4">
+                  <div class="col-12 mb-4">
                     <!-- Last name -->
-                      <!-- Label -->
-                      <select v-model="input.hospitalID" class="form-control form-select" style="width: 100%; height: 35px" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option v-for="(name, index) in responseDatas" :key="index" :value='name._id'>{{name.name}}</option>
-                           </select>
-                    </div>
+                    <!-- Label -->
+                    <select v-model="input.hospitalID" class="form-control form-select" style="width: 100%; height: 35px" aria-label="Default select example">
+                      <option selected>
+                        Open this select menu
+                      </option>
+                      <option v-for="(name, index) in responseDatas" :key="index" :value="name._id">
+                        {{ name.name }}
+                      </option>
+                    </select>
+                  </div>
                   <div class="col-12">
                     <!-- Last name -->
                     <div class="form-group">
@@ -118,10 +122,8 @@ export default {
     if (result.statuscode === 200) {
       this.responseDatas = result.data
       apiService.getToken(this.tokenKey)
-      console.log(result)
     } else if (result.statuscode === 400) {
       alert(result.message)
-      console.log(result)
     }
   },
   methods: {
@@ -130,13 +132,11 @@ export default {
       const res = await apiService.request(true, urls.ADDADMIN, this.input, 'POST', 'ADMIN_TOKEN')
       const result = await res.json()
       if (result.statuscode === 200) {
-        console.log(result)
         this.isLoading = true
         this.isLoading = false
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)
-        console.log(result)
       }
     }
   }

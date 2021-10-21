@@ -63,7 +63,7 @@
                 <!-- <div class="spinner-border" style="width: 2rem; text-align: center; height: 2rem;" role="status">
                             <span v-if="isLoading" class="visually-hidden"></span>
                         </div> -->
-                <tbody>
+                <tbody v-if="!loader">
                   <tr v-for="(responseData,index) in hospitalResponseDatas" :key="index">
                     <th scope="row">
                       {{ responseData.hospitalID }}
@@ -92,6 +92,16 @@
                       </th> -->
                   </tr>
                 </tbody>
+                <tbody v-if="loader" class=" loader-spin">
+                  <div class="text-center">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                      <span class="visually-hidden" />
+                    </div>
+                  </div>
+                </tbody>
+                <tbody class="loader-spin" v-if="!loader && hospitalResponseDatas.length == 0">
+                  <p>No Registered Hospital</p>
+                </tbody>
               </table>
               <br><br>
             </div>
@@ -114,13 +124,17 @@ export default {
   data () {
     return {
       responseDatas: [],
-      mostPopularHospital: [],
-      recentlyAddedHospital: [],
       isLoading: false,
-      searchQuery: null
+      loader: true
+    }
+  },
+  computed: {
+    hospitalResponseDatas () {
+      return this.responseDatas.filter(responseData => (responseData.category === 'HOSPITAL'))
     }
   },
   async mounted () {
+    this.loader = true
     this.isLoading = false
     const res = await apiService.request(true, urls.HOSPITAL, {}, 'GET', 'ADMIN_TOKEN')
     const result = await res.json()
@@ -128,10 +142,9 @@ export default {
     this.isLoading = false
     if (result.statuscode === 200) {
       this.isLoading = false
-      console.log(result)
+      this.loader = false
     } else if (result.statuscode === 400) {
       alert(result.message)
-      console.log(result)
       this.isLoading = true
     }
   },
@@ -152,7 +165,6 @@ export default {
     //   }
     // },
     details (getData) {
-      console.log(getData.hospitalID)
       const storeObj = {}
       storeObj._id = getData._id
       this.$store.commit('saveHospitalData', storeObj)
@@ -161,7 +173,6 @@ export default {
       }
     },
     edit (getData) {
-      console.log(getData.hospitalID)
       const storeObj = {}
       storeObj._id = getData._id
       this.$store.commit('saveHospitalData', storeObj)
@@ -187,11 +198,6 @@ export default {
     //     this.$router.replace('/updatehospital')
     //   }
     // }
-  },
-  computed: {
-    hospitalResponseDatas () {
-      return this.responseDatas.filter(responseData => (responseData.category === 'HOSPITAL'))
-    }
   }
 }
 </script>
@@ -199,5 +205,13 @@ export default {
 <style>
 .table tbody tr td {
   white-space: pre-wrap
+}
+.main-container {
+  background: white
+}
+.loader-spin {
+  position: relative;
+  left: 40%;
+  top: 70px;
 }
 </style>

@@ -282,10 +282,7 @@ export default {
         folder: 'upload-examples',
         uploadPreset: 'hspace'
       })
-      console.log(instance)
-      console.log(instance.secure_url)
       const imageUrl = instance.secure_url
-      console.log(imageUrl)
       // this.input.galleryImages.push(...imageUrl)
       this.input.galleryImages.push(imageUrl)
     },
@@ -293,19 +290,14 @@ export default {
       this.isLoading = true
       this.input.services = this.servicesOption
       this.input.galleryImages.push(...this.imagesOption)
-      // this.input.galleryImages.push(...this.imageUrl)
-      console.log(this.input.galleryImages)
       const res = await apiService.request(true, urls.ADDHOSPITAL, this.input, 'POST', 'ADMIN_TOKEN')
       const result = await res.json()
-      console.log(this.input.services)
       if (result.statuscode === 200) {
         this.$router.replace('/laboratory')
-        console.log(result)
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)
       }
-      console.log(result)
     }
   }
 }

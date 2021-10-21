@@ -4,9 +4,11 @@
     ================================================== -->
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-12 col-md-5 col-xl-4 my-7">
+        <div class="col-12 col-md-5 col-xl-4 my-5">
+          <div class="mb-7 logo-image text-center">
+            <img class="justify-content-center" width="200px" height="60px" src="Hspace.png">
+          </div>
           <h1 class="display-4 text-center mb-3">
-            <img class="justify-content-center text-center mx-auto" width="200px" height="60px" src="Hspace.png">
             Reset Password
           </h1>          <!-- Form -->
           <form>
@@ -23,17 +25,17 @@
               <!-- Input -->
               <input class="form-control" placeholder="new password">
             </div>
-            <button v-if="!isLoading" class="btn btn-lg btn-block btn-primary mb-3">
+            <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="validate()">
               Reset Password
             </button>
             <button v-if="isLoading" class="btn btn-lg btn-block btn-primary mb-3">
-                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
-                  Reset Password
-                              </button>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
+              Reset Password
+            </button>
             <!-- Link -->
             <div class="text-center">
               <small class="text-muted text-center">
-                Remember your password?<router-link to="./signin">Sign in</router-link>.
+                Remember your password?<router-link to="/signinadmin">Sign in</router-link>.
               </small>
             </div>
           </form>
@@ -65,12 +67,11 @@ export default {
       const result = await res.json()
       if (result.statuscode === 200) {
         this.isLoading = false
-        console.log(result)
         this.$router.replace('/signinadmin')
       } else if (result.statuscode === 400) {
+        this.isLoading = false
         alert(result.message)
       }
-      console.log(result)
     }
   }
 }

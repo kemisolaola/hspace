@@ -3,10 +3,11 @@
     <div class="row justify-content-center">
       <div class="col-12 col-md-5 col-xl-4 my-5">
         <!-- Heading -->
+        <div class="mb-7 logo-image text-center">
+          <img class="justify-content-center" width="200px" height="60px" src="/Hspace.png">
+        </div>
         <h1 class="display-4 text-center mb-3">
-          <img class="justify-content-center text-center mx-auto" width="200px" height="60px" src="Hspace.png">
-          <br><br>
-          Hspace Sign up
+          Hspace <br> Sign up
         </h1>
         <!-- Form -->
         <form>
@@ -14,7 +15,7 @@
           <div class="form-group">
             <!-- Label -->
             <label>
-             First Name
+              First Name
             </label>
             <!-- Input -->
             <input v-model="input.firstName" type="text" class="form-control" placeholder="First Name">
@@ -76,7 +77,7 @@
           <!-- Link -->
           <div class="text-center">
             <small class="text-muted text-center">
-              Already have an account? <nuxt-link to="hspace/signin">Log in</nuxt-link>.
+              Already have an account? <nuxt-link to="/hspace/signin">Log in</nuxt-link>.
             </small>
           </div>
         </form>
@@ -110,13 +111,11 @@ export default {
       const res = await apiService.request(false, urls.SIGNUPSUPERADMIN, this.input, 'POST')
       const result = await res.json()
       if (result.statuscode === 200) {
-        console.log(result)
         this.isLoading = false
         this.$router.replace('/hspace/hospitals')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)
-        console.log(result)
       }
     },
     showPassword () {

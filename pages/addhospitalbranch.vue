@@ -205,9 +205,13 @@
                       </label>
                       <!-- Input -->
                       <select v-model="input.parentHospital" class="form-select form-control" style="width: 100%; height: 35px" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option v-for="(name, index) in responseDatas" :key="index" :value='name._id'>{{name.name}}</option>
-                           </select>
+                        <option selected>
+                          Open this select menu
+                        </option>
+                        <option v-for="(name, index) in responseDatas" :key="index" :value="name._id">
+                          {{ name.name }}
+                        </option>
+                      </select>
                     </div>
                   </div>
                   <div v-for="(i, index) in imagesOption.length" :key="index" class="col-12 col-md-6">
@@ -316,10 +320,8 @@ export default {
     if (result.statuscode === 200) {
       this.responseDatas = result.data
       apiService.getToken(this.tokenKey)
-      console.log(result)
     } else if (result.statuscode === 400) {
       alert(result.message)
-      console.log(result)
     }
   },
   methods: {
@@ -348,30 +350,21 @@ export default {
         folder: 'upload-examples',
         uploadPreset: 'hspace'
       })
-      console.log(instance)
-      console.log(instance.secure_url)
       const imageUrl = instance.secure_url
-      console.log(imageUrl)
       // this.input.galleryImages.push(...imageUrl)
       this.input.galleryImages.push(imageUrl)
     },
     async addHospital () {
       this.isLoading = true
       this.input.services = this.servicesOption
-      // this.input.galleryImages.push(...this.imagesOption)
-      // this.input.galleryImages.push(...this.imageUrl)
-      console.log(this.input.galleryImages)
       const res = await apiService.request(true, urls.ADDHOSPITALBRANCH, this.input, 'POST')
       const result = await res.json()
-      console.log(this.input.services)
       if (result.statuscode === 200) {
         this.$router.replace('/hospital')
-        console.log(result)
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)
       }
-      console.log(result)
     }
   }
 }

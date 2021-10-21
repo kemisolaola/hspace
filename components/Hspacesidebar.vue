@@ -10,13 +10,13 @@
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
-      <span @click.stop="toggleNavbar()"><img src="menu.png">  </span>
+      <span @click.stop="toggleNavbar()"><img src="/menu.png">  </span>
     </button>
 
     <!-- Brand -->
     <a class="navbar-brand">
       <img
-        src="Hspace.png"
+        src="/Hspace.png"
         class="navbar-brand-img
           mx-auto"
         alt="..."
@@ -28,16 +28,7 @@
       <ul style="color: #013c78" class="navbar-nav">
         <li class="nav-item">
           <nuxt-link
-            to="addadmin"
-            class="nav-link"
-            aria-controls="sidebarDashboards"
-          >
-            <i class="fe fe-home" /> Add Admin
-          </nuxt-link>
-        </li>
-        <li class="nav-item">
-          <nuxt-link
-            to="hospitals"
+            to="/hspace/hospitals"
             class="nav-link"
             aria-controls="sidebarDashboards"
           >
@@ -46,7 +37,7 @@
         </li>
         <li class="nav-item">
           <nuxt-link
-            to="laboratory"
+            to="/hspace/laboratory"
             class="nav-link"
             aria-controls="sidebarDashboards"
           >
@@ -55,12 +46,21 @@
         </li>
         <li class="nav-item">
           <nuxt-link
-            to="pharmacy"
+            to="/hspace/pharmacy"
             class="nav-link"
             aria-controls="sidebarPages"
           >
             <i class="fe fe-file" />Pharmacy
           </nuxt-link>
+        </li>
+        <li class="nav-item" @click="logout()">
+          <a
+            style="cursor: pointer;"
+            class="nav-link"
+            aria-controls="sidebarPages"
+          >
+            <i class="fe fe-file" />Logout
+          </a>
         </li>
       </ul>
     </div> <!-- / .navbar-collapse -->
@@ -82,8 +82,7 @@ export default {
     },
     logout () {
       apiService.logOut('SUPERADMIN_TOKEN')
-      this.$router.replace('signinadmin')
-      console.log('logged')
+      this.$router.replace('/hspace/signin')
     }
   }
 }

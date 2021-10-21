@@ -3,10 +3,12 @@
     ================================================== -->
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-5 col-xl-4 my-7">
+      <div class="col-12 col-md-5 col-xl-4 my-5">
+        <div class="mb-7 logo-image text-center">
+          <img class="justify-content-center" width="200px" height="60px" src="Hspace.png">
+        </div>
         <h1 class="display-4 text-center mb-3">
-          <img class="justify-content-center text-center mx-auto" width="200px" height="60px" src="Hspace.png">
-          <br> <br>Reset Password
+          Reset Password
         </h1>
         <!-- Form -->
         <form>
@@ -19,7 +21,11 @@
           </div>
           <!-- Password -->
           <!-- Submit -->
-          <button type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="reset()">
+          <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="reset()">
+            Reset
+          </button>
+          <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
             Reset
           </button>
           <!-- Link -->
@@ -39,20 +45,22 @@ export default {
     return {
       input: {
         email: ''
-      }
+      },
+      isLoading: false
     }
   },
   methods: {
     async reset () {
+      this.isLoading = true
       const res = await apiService.request(true, urls.RESETPASSWORDREQADMIN, this.input, 'POST')
       const result = await res.json()
       if (result.statuscode === 200) {
-        console.log(result)
+        this.isLoading = false
         this.$router.replace('/validatetokenadmin')
       } else if (result.statuscode === 400) {
         alert(result.message)
+        this.isLoading = false
       }
-      console.log(result)
     }
   }
 }

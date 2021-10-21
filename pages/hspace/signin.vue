@@ -3,10 +3,12 @@
     ================================================== -->
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-5 col-xl-4 my-7">
+      <div class="col-12 col-md-5 col-xl-4 my-5">
+        <div class="mb-7 logo-image text-center">
+          <img class="justify-content-center" width="200px" height="60px" src="/Hspace.png">
+        </div>
         <h1 class="display-4 text-center mb-3">
-          <img class="justify-content-center text-center mx-auto" width="200px" height="60px" src="/Hspace.png">
-          <br><br> Sign in
+          Sign in
         </h1>
         <!-- Form -->
         <form>
@@ -40,7 +42,7 @@
           </div>
           <div class="col-auto">
             <!-- Help text -->
-            <nuxt-link to="resetpasswordadminreq" class="form-text small text-muted">
+            <nuxt-link to="/hspace/resetpasswordadminreq" class="form-text small text-muted">
               Forgot password?
             </nuxt-link>
           </div>
@@ -88,14 +90,11 @@ export default {
       if (result.statuscode === 200) {
         apiService.setToken('SUPERADMIN_TOKEN', result.data.token)
         this.isLoading = false
-        console.log(result)
-        console.log('this is' + apiService.getToken())
         this.$router.replace('/hspace/hospitals')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)
       }
-      console.log(result)
     },
     showPassword () {
       if (this.type === 'password') {

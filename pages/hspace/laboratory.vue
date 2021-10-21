@@ -21,7 +21,7 @@
                     <div class="col">
                       <!-- Title -->
                       <h1 class="header-title">
-                        LABORATORY
+                        Laboratory
                       </h1>
                     </div>
                   </div> <!-- / .row -->
@@ -56,7 +56,7 @@
                 <!-- <div class="spinner-border" style="width: 2rem; text-align: center; height: 2rem;" role="status">
                             <span v-if="isLoading" class="visually-hidden"></span>
                         </div> -->
-                <tbody>
+                <tbody v-if="!loader">
                   <tr v-for="(responseData,index) in laboratoryList" :key="index">
                     <th scope="row">
                       {{ responseData.hospitalID }}
@@ -74,7 +74,7 @@
                       </button>
                     </th>
                     <th>
-                     <button v-if="responseData.active == false && isLoading == false" type="button" class="btn btn-lg btn-block btn-primary" @click="activate(responseData._id)">
+                      <button v-if="responseData.active == false && isLoading == false" type="button" class="btn btn-lg btn-block btn-primary" @click="activate(responseData._id)">
                         Activate
                       </button>
                       <button v-if="isLoading == true && responseData.active == false" type="button" class="btn btn-lg btn-block btn-primary">
@@ -91,6 +91,13 @@
                         </button>
                       </th> -->
                   </tr>
+                </tbody>
+                <tbody v-if="loader" class=" loader-spin">
+                  <div v-if="loader" class="text-center">
+                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                      <span class="visually-hidden" />
+                    </div>
+                  </div>
                 </tbody>
               </table>
               <br><br>
@@ -114,13 +121,18 @@ export default {
   data () {
     return {
       responseDatas: [],
-      mostPopularHospital: [],
-      recentlyAddedHospital: [],
+      loader: true,
       isLoading: false,
       activated: false
     }
   },
+  computed: {
+    laboratoryList () {
+      return this.responseDatas.filter(responseData => responseData.category === 'LABORATORY')
+    }
+  },
   async mounted () {
+    this.loader = true
     this.isLoading = false
     const res = await apiService.request(true, urls.GETALLHOSPITAL, {}, 'GET', 'SUPERADMIN_TOKEN')
     const result = await res.json()
@@ -128,10 +140,9 @@ export default {
     this.isLoading = false
     if (result.statuscode === 200) {
       this.isLoading = false
-      console.log(result)
+      this.loader = false
     } else if (result.statuscode === 400) {
       alert(result.message)
-      console.log(result)
       this.isLoading = true
     }
   },
@@ -146,15 +157,12 @@ export default {
         this.isLoading = false
         this.activated = true
         this.$router.go()
-        console.log(result)
       } else if (result.statuscode === 400) {
         alert(result.message)
-        console.log(result)
         this.isLoading = true
       }
     },
     details (getData) {
-      console.log(getData.hospitalID)
       const storeObj = {}
       storeObj._id = getData._id
       this.$store.commit('saveHospitalData', storeObj)
@@ -163,7 +171,6 @@ export default {
       }
     },
     edit (getData) {
-      console.log(getData.hospitalID)
       const storeObj = {}
       storeObj._id = getData._id
       this.$store.commit('saveHospitalData', storeObj)
@@ -189,11 +196,6 @@ export default {
     //     this.$router.replace('/updatehospital')
     //   }
     // }
-  },
-  computed: {
-    laboratoryList () {
-      return this.responseDatas.filter(responseData => responseData.category === 'LABORATORY')
-    }
   }
 }
 </script>
@@ -201,5 +203,10 @@ export default {
 <style>
 .table tbody tr td {
   white-space: pre-wrap
+}
+.loader-spin {
+  position: relative;
+  left: 40%;
+  top: 70px;
 }
 </style>

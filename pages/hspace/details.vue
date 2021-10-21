@@ -152,15 +152,12 @@ export default {
     }
   },
   async mounted () {
-    console.log(this.hospital)
     const res = await apiService.request(true, urls.GETHOSPITAL + this.hospital, {}, 'GET', 'SUPERADMIN_TOKEN')
     const result = await res.json()
     if (result.statuscode === 200) {
       this.responseDatas = result.data
       apiService.getToken(this.tokenKey)
-      console.log(result)
     } else if (result.statuscode === 400) {
-      console.log(result)
     }
   }
 }

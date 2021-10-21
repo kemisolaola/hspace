@@ -19,11 +19,6 @@ const request = function (hasToken = false, url, requestBody, method, tokenKey =
     'x-api-key': 'e8aa784c-6c76-11eb-9439-0242ac130002'
   }
 
-  // check that token is available or api has token
-  if (hasToken && token == null) {
-    console.log('token')
-  }
-
   // add token to header
   if (hasToken) {
     headerDetails = {

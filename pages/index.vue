@@ -3,9 +3,10 @@
     <div class="row justify-content-center">
       <div class="col-12 col-md-5 col-xl-4 my-5">
         <!-- Heading -->
+        <div class="mb-7 logo-image text-center">
+          <img class="justify-content-center" width="200px" height="60px" src="Hspace.png">
+        </div>
         <h1 class="display-4 text-center mb-3">
-          <img class="justify-content-center text-center mx-auto" width="200px" height="60px" src="Hspace.png">
-          <br><br>
           Sign up
         </h1>
         <!-- Form -->
@@ -53,7 +54,7 @@
           <button v-if="!isLoading" type="submit" class="btn btn-lg btn-block btn-primary mb-3" @click="signup()">
             Sign up
           </button>
-          <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="signup()">
+          <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
             Sign up
           </button>
@@ -92,13 +93,11 @@ export default {
       const res = await apiService.request(false, urls.SIGNUPADMIN, this.input, 'POST')
       const result = await res.json()
       if (result.statuscode === 200) {
-        console.log(result)
         this.isLoading = false
         this.$router.replace('/addhospital')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)
-        console.log(result)
       }
     },
     showPassword () {
@@ -115,4 +114,9 @@ export default {
 </script>
 
 <style scoped>
+.logo-image{
+  widows: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>

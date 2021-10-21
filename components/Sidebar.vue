@@ -71,12 +71,14 @@
             <i class="fe fe-file" />Pharmacy
           </nuxt-link>
         </li>
-        <li @click="logout()" class="nav-item">
-            <a
+        <li class="nav-item" @click="logout()">
+          <a
+            style="cursor: pointer;"
             class="nav-link"
-            aria-controls="sidebarPages">
-             <i class="fe fe-file" />Logout
-            </a>
+            aria-controls="sidebarPages"
+          >
+            <i class="fe fe-file" />Logout
+          </a>
         </li>
       </ul>
     </div> <!-- / .navbar-collapse -->
@@ -98,8 +100,7 @@ export default {
     },
     logout () {
       apiService.logOut('ADMIN_TOKEN')
-      this.$router.replace('signinadmin')
-      console.log('logged')
+      this.$router.replace('/signinadmin')
     }
   }
 }
@@ -110,6 +111,6 @@ export default {
   background: white
 }
 a {
-  color: #013c78
+  color: #013c78;
 }
 </style>

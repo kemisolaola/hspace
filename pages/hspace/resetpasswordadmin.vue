@@ -4,10 +4,12 @@
     ================================================== -->
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-12 col-md-5 col-xl-4 my-7">
+        <div class="col-12 col-md-5 col-xl-4 my-5">
+          <div class="mb-7 logo-image text-center">
+            <img class="justify-content-center" width="200px" height="60px" src="/Hspace.png">
+          </div>
           <h1 class="display-4 text-center mb-3">
-            <img class="justify-content-center text-center mx-auto" width="200px" height="60px" src="/Hspace.png">
-           <br> Reset Password
+            Reset Password
           </h1>          <!-- Form -->
           <form>
             <!-- Email address -->
@@ -23,7 +25,11 @@
               <!-- Input -->
               <input class="form-control" placeholder="new password">
             </div>
-            <button type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="validate()">
+            <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="validate()">
+              Reset Password
+            </button>
+            <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
               Reset Password
             </button>
             <!-- Link -->
@@ -61,12 +67,11 @@ export default {
       const result = await res.json()
       if (result.statuscode === 200) {
         this.isLoading = false
-        console.log(result)
         this.$router.replace('/hspace/signin')
       } else if (result.statuscode === 400) {
+        this.isLoading = false
         alert(result.message)
       }
-      console.log(result)
     }
   }
 }
