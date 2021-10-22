@@ -23,7 +23,7 @@
               <!-- Label -->
               <label>New Password</label>
               <!-- Input -->
-              <input class="form-control" placeholder="new password">
+              <input class="form-control" type="password" placeholder="new password">
             </div>
             <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="validate()">
               Reset Password
@@ -65,6 +65,8 @@ export default {
       this.isLoading = true
       const res = await apiService.request(true, urls.RESETPASSWORDADMIN, this.input, 'POST')
       const result = await res.json()
+      console.log(result)
+
       if (result.statuscode === 200) {
         this.isLoading = false
         this.$router.replace('/signinadmin')

@@ -50,7 +50,7 @@ export default {
     }
   },
   mounted () {
-    alert('Password Reset Token sent to your registered email, Kindly use this  token')
+    alert('Hello! Password Reset Token sent to your registered email, Kindly use this token')
   },
   methods: {
     async validate () {
