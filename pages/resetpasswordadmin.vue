@@ -15,21 +15,21 @@
             <!-- Email address -->
             <div class="form-group">
               <!-- Label -->
-              <label>Token</label>
-              <!-- Input -->
-              <input type="text" class="form-control" placeholder="token">
-            </div>
-            <div class="form-group">
-              <!-- Label -->
               <label>New Password</label>
               <!-- Input -->
-              <input class="form-control" type="password" placeholder="new password">
+              <input class="form-control" type="text" placeholder="new password" v-model="input.newPassword" >
+              <!-- <div class="invalid-feedback">
+                <span v-if="!$v.input.newPassword.required">Password word is required.</span>
+                <span v-if="!$v.input.newPassword.required">Password word is required.</span>
+              </div> -->
             </div>
-            <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="validate()">
-              Reset Password
-            </button>
-            <button v-if="isLoading" class="btn btn-lg btn-block btn-primary mb-3">
-              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
+             <div class="form-group">
+              <!-- Label -->
+              <label>Confirm Password</label>
+              <!-- Input -->
+              <input class="form-control" type="text" placeholder="new password" v-model="confirmPassword">
+            </div>
+            <button type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="validate">
               Reset Password
             </button>
             <!-- Link -->
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { required, minLength } from 'vuelidate/lib/validators'
 import apiService from '../api/apiservice'
 import urls from '../api/apiUrl'
 import '../assets/css/theme-dark.min.css'
@@ -54,25 +55,43 @@ export default {
   data () {
     return {
       input: {
-        token: '',
+        token: this.$store.state.tokenData,
         newPassword: ''
+        // confirmPassword: ''
       },
-      isLoading: false
+      confirmPassword: '',
+      isLoading: false,
+      validations: {
+        input: {
+          newPassword: {
+            required,
+            minLength: minLength(8)
+          }
+        },
+        confirmPassword: {
+          required,
+          minLength: minLength(8)
+        }
+      }
     }
   },
   methods: {
     async validate () {
       this.isLoading = true
-      const res = await apiService.request(true, urls.RESETPASSWORDADMIN, this.input, 'POST')
-      const result = await res.json()
-      console.log(result)
-
-      if (result.statuscode === 200) {
-        this.isLoading = false
-        this.$router.replace('/signinadmin')
-      } else if (result.statuscode === 400) {
-        this.isLoading = false
-        alert(result.message)
+      if (this.input.newPassword === this.confirmPassword) {
+        const res = await apiService.request(true, urls.RESETPASSWORDADMIN, this.input, 'POST', 'ADMIN_TOKEN')
+        const result = await res.json()
+        console.log(result)
+        if (result.statuscode === 200) {
+          this.isLoading = false
+          console.log(result)
+          this.$router.push('/confirmreset')
+          console.log(result.data)
+        } else if (result.statuscode === 400) {
+          console.log(result.data)
+          this.isLoading = false
+          alert(result.message)
+        }
       }
     }
   }

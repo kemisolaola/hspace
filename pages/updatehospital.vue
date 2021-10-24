@@ -311,7 +311,7 @@ export default {
       result.data.address = this.address
       if (result.statuscode === 200) {
         this.isLoading = false
-        this.$router.replace('/hospital')
+        this.$router.push('/hospital')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)

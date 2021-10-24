@@ -360,7 +360,7 @@ export default {
       const res = await apiService.request(true, urls.ADDHOSPITALBRANCH, this.input, 'POST')
       const result = await res.json()
       if (result.statuscode === 200) {
-        this.$router.replace('/hospital')
+        this.$router.push('/hospital')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)

@@ -84,7 +84,7 @@ export default {
       },
       isLoading: false,
       type: 'password',
-      text: 'Hide Password'
+      text: 'Show Password'
     }
   },
   methods: {
@@ -94,7 +94,7 @@ export default {
       const result = await res.json()
       if (result.statuscode === 200) {
         this.isLoading = false
-        this.$router.replace('/addhospital')
+        this.$router.push('/addhospital')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)

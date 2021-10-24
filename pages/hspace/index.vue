@@ -112,7 +112,7 @@ export default {
       const result = await res.json()
       if (result.statuscode === 200) {
         this.isLoading = false
-        this.$router.replace('/hspace/hospitals')
+        this.$router.push('/hspace/hospitals')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)

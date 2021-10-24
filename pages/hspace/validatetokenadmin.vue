@@ -56,7 +56,7 @@ export default {
       const result = await res.json()
       if (result.statuscode === 200) {
         this.isLoading = false
-        this.$router.replace('/hspace/resetpasswordadmin')
+        this.$router.push('/hspace/resetpasswordadmin')
       } else if (result.statuscode === 400) {
         alert(result.message)
         this.isLoading = false

@@ -268,7 +268,7 @@ export default {
       const res = await apiService.request(true, urls.ADDHOSPITAL, this.input, 'POST', 'ADMIN_TOKEN')
       const result = await res.json()
       if (result.statuscode === 200) {
-        this.$router.replace('/pharmacy')
+        this.$router.push('/pharmacy')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)

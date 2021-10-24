@@ -56,7 +56,7 @@ export default {
       const result = await res.json()
       if (result.statuscode === 200) {
         this.isLoading = true
-        this.$router.replace('/hspace/validatetokenadmin')
+        this.$router.push('/hspace/validatetokenadmin')
       } else if (result.statuscode === 400) {
         alert(result.message)
         this.isLoading = false

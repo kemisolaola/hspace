@@ -153,7 +153,7 @@ export default {
       storeObj._id = getData._id
       this.$store.commit('saveHospitalData', storeObj)
       if (this.$store.state.hospitalInitData.hospitalID !== '') {
-        this.$router.replace('/details')
+        this.$router.push('/details')
       }
     },
     update (getData) {
@@ -170,7 +170,7 @@ export default {
       storeObj.phone = getData.phone
       this.$store.commit('saveHospitalData', storeObj)
       if (this.$store.state.hospitalInitData.hospitalID !== '') {
-        this.$router.replace('/updatehospital')
+        this.$router.push('/updatehospital')
       }
     }
   }

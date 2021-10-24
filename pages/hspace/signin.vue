@@ -90,7 +90,7 @@ export default {
       if (result.statuscode === 200) {
         apiService.setToken('SUPERADMIN_TOKEN', result.data.token)
         this.isLoading = false
-        this.$router.replace('/hspace/hospitals')
+        this.$router.push('/hspace/hospitals')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)

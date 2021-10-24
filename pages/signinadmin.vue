@@ -79,7 +79,7 @@ export default {
       },
       isLoading: false,
       type: 'password',
-      text: 'Hide Password'
+      text: 'Show Password'
     }
   },
   methods: {
@@ -90,7 +90,7 @@ export default {
       if (result.statuscode === 200) {
         apiService.setToken('ADMIN_TOKEN', result.data.token)
         this.isLoading = false
-        this.$router.replace('/hospital')
+        this.$router.push('/hospital')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)

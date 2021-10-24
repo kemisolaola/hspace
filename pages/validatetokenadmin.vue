@@ -17,11 +17,11 @@
             <!-- Label -->
             <label>Token</label>
             <!-- Input -->
-            <input v-model="input.token" type="email" class="form-control" placeholder="token">
+            <input v-model="input.token" class="form-control" placeholder="token">
           </div>
           <!-- Password -->
           <!-- Submit -->
-          <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="validate ()">
+          <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="validate (input.token)">
             Validate
           </button>
           <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3">
@@ -53,13 +53,16 @@ export default {
     alert('Hello! Password Reset Token sent to your registered email, Kindly use this token')
   },
   methods: {
-    async validate () {
+    async validate (token) {
+      let storeToken = ''
+      storeToken = token
+      this.$store.commit('saveToken', storeToken)
       this.isLoading = true
       const res = await apiService.request(true, urls.VALIDATETOKENADMIN, this.input, 'POST')
       const result = await res.json()
-      if (result.statuscode === 200) {
+      if (result.statuscode === 200 && this.$store.state.tokenData !== '') {
         this.isLoading = false
-        this.$router.replace('/resetpasswordadmin')
+        this.$router.push('/resetpasswordadmin')
       } else if (result.statuscode === 400) {
         this.isLoading = false
         alert(result.message)

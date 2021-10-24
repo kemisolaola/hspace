@@ -1,4 +1,5 @@
 export const state = () => ({
+  tokenData: '',
   hospitalInitData: {
     _id: '',
     address: {
@@ -19,5 +20,8 @@ export const state = () => ({
 export const mutations = {
   saveHospitalData: (state, payload) => {
     state.hospitalInitData = payload
+  },
+  saveToken: (state, payload) => {
+    state.tokenData = payload
   }
 }

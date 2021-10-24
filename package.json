@@ -19,7 +19,9 @@
     "core-js": "^3.15.1",
     "google-signin-vue": "^1.2.2",
     "nuxt": "^2.15.7",
-    "vue-google-signin-button": "^1.0.4"
+    "nuxt-vuelidate-module": "^1.0.0",
+    "vue-google-signin-button": "^1.0.4",
+    "vuelidate": "^0.7.6"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",

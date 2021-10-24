@@ -168,7 +168,7 @@ export default {
       storeObj._id = getData._id
       this.$store.commit('saveHospitalData', storeObj)
       if (this.$store.state.hospitalInitData.hospitalID !== '') {
-        this.$router.replace('/hspace/details')
+        this.$router.push('/hspace/details')
       }
     },
     edit (getData) {
@@ -176,7 +176,7 @@ export default {
       storeObj._id = getData._id
       this.$store.commit('saveHospitalData', storeObj)
       if (this.$store.state.hospitalInitData.hospitalID !== '') {
-        this.$router.replace('/updatehospital')
+        this.$router.push('/updatehospital')
       }
     }
     // update (getData) {
@@ -194,7 +194,7 @@ export default {
     //   storeObj.phone = getData.phone
     //   this.$store.commit('saveHospitalData', storeObj)
     //   if (this.$store.state.hospitalInitData.hospitalID !== '') {
-    //     this.$router.replace('/updatehospital')
+    //     this.$router.push('/updatehospital')
     //   }
     // }
   }
