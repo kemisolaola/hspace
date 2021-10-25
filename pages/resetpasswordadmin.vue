@@ -81,14 +81,10 @@ export default {
       if (this.input.newPassword === this.confirmPassword) {
         const res = await apiService.request(true, urls.RESETPASSWORDADMIN, this.input, 'POST', 'ADMIN_TOKEN')
         const result = await res.json()
-        console.log(result)
         if (result.statuscode === 200) {
           this.isLoading = false
-          console.log(result)
           this.$router.push('/confirmreset')
-          console.log(result.data)
         } else if (result.statuscode === 400) {
-          console.log(result.data)
           this.isLoading = false
           alert(result.message)
         }

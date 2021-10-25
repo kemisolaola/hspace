@@ -92,7 +92,7 @@
                       </th> -->
                   </tr>
                 </tbody>
-                 <tbody v-if="loader" class=" loader-spin">
+                <tbody v-if="loader" class=" loader-spin">
                   <div v-if="loader" class="text-center">
                     <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
                       <span class="visually-hidden" />

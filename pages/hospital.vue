@@ -99,7 +99,7 @@
                     </div>
                   </div>
                 </tbody>
-                <tbody class="loader-spin" v-if="!loader && hospitalResponseDatas.length == 0">
+                <tbody v-if="!loader && hospitalResponseDatas.length == 0" class="loader-spin">
                   <p>No Registered Hospital</p>
                 </tbody>
               </table>
