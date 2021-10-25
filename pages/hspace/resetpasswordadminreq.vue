@@ -52,10 +52,10 @@ export default {
   methods: {
     async reset () {
       this.isLoading = true
-      const res = await apiService.request(true, urls.RESETPASSWORDREQADMIN, this.input, 'POST')
+      const res = await apiService.request(true, urls.RESETPASSWORDREQSUPERADMIN, this.input, 'POST')
       const result = await res.json()
       if (result.statuscode === 200) {
-        this.isLoading = true
+        this.isLoading = false
         this.$router.push('/hspace/validatetokenadmin')
       } else if (result.statuscode === 400) {
         alert(result.message)

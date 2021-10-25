@@ -21,7 +21,7 @@
           </div>
           <!-- Password -->
           <!-- Submit -->
-          <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="validate ()">
+          <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="validate (input.token)">
             Validate Token
           </button>
           <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3">
@@ -49,17 +49,24 @@ export default {
       isLoading: false
     }
   },
+  mounted () {
+    alert('Hello! Password Reset Token sent to your registered email, Kindly use this token')
+  },
   methods: {
-    async validate () {
+    async validate (token) {
+      let storeToken = ''
+      storeToken = token
+      this.$store.commit('saveSAToken', storeToken)
       this.isLoading = true
-      const res = await apiService.request(true, urls.VALIDATETOKENADMIN, this.input, 'POST')
+      const res = await apiService.request(true, urls.VALIDATETOKENSUPERADMIN, this.input, 'POST')
       const result = await res.json()
-      if (result.statuscode === 200) {
+      console.log('tojen', this.$store.state.sAdmintokenData)
+      if (result.statuscode === 200 && this.$store.state.sAdmintokenData !== '') {
         this.isLoading = false
         this.$router.push('/hspace/resetpasswordadmin')
       } else if (result.statuscode === 400) {
-        alert(result.message)
         this.isLoading = false
+        alert(result.message)
       }
     }
   }

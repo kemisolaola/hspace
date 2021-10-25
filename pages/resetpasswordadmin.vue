@@ -17,17 +17,17 @@
               <!-- Label -->
               <label>New Password</label>
               <!-- Input -->
-              <input class="form-control" type="text" placeholder="new password" v-model="input.newPassword" >
+              <input v-model="input.newPassword" class="form-control" type="password" placeholder="new password">
               <!-- <div class="invalid-feedback">
                 <span v-if="!$v.input.newPassword.required">Password word is required.</span>
                 <span v-if="!$v.input.newPassword.required">Password word is required.</span>
               </div> -->
             </div>
-             <div class="form-group">
+            <div class="form-group">
               <!-- Label -->
               <label>Confirm Password</label>
               <!-- Input -->
-              <input class="form-control" type="text" placeholder="new password" v-model="confirmPassword">
+              <input v-model="confirmPassword" class="form-control" type="password" placeholder="confirm password">
             </div>
             <button type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="validate">
               Reset Password
@@ -92,7 +92,7 @@ export default {
           this.isLoading = false
           alert(result.message)
         }
-      }
+      } else { alert('Password do not match. Kindly check and try again') }
     }
   }
 }
