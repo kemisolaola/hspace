@@ -4,12 +4,15 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-md-5 col-xl-4 my-5">
-        <div class="mb-7 logo-image text-center">
+        <div class="mb-5 logo-image text-center">
           <img class="justify-content-center" width="200px" height="60px" src="Hspace.png">
         </div>
         <h1 class="display-4 text-center mb-3">
           Sign in
         </h1>
+        <div v-if="errorMessage" class="alert alert-light mt-2" role="alert">
+           {{errorText}} Try again.
+      </div>
         <!-- Form -->
         <form>
           <!-- Email address -->
@@ -17,7 +20,7 @@
             <!-- Label -->
             <label>Email Address</label>
             <!-- Input -->
-            <input v-model="input.email" type="email" class="form-control" placeholder="name@address.com">
+            <input v-model="input.email" type="email" class="form-control" placeholder="name@address.com" required>
           </div>
           <!-- Password -->
           <div class="form-group">
@@ -36,7 +39,7 @@
             <!-- Input group -->
             <div class="input-group input-group-merge">
               <!-- Input -->
-              <input v-model="input.password" :type="type" class="form-control" placeholder="Enter your password">
+              <input v-model="input.password" :type="type" class="form-control" placeholder="Enter your password" required>
               <!-- Icon -->
             </div>
           </div>
@@ -46,11 +49,14 @@
               Forgot password?
             </nuxt-link>
           </div>
+           <div class="col-auto">
+            <!-- Help text -->
+          </div>
           <!-- Submit -->
-          <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="signin">
+          <button v-if="!isLoading" type="submit" class="btn btn-lg btn-block btn-primary mb-3" @click="signin()">
             Sign in
           </button>
-          <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="signup()">
+          <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
             Sign in
           </button>
@@ -69,10 +75,11 @@
 <script>
 import apiService from '../api/apiservice'
 import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
 export default {
   data () {
     return {
+      errorMessage: false,
+      errorText: '',
       input: {
         email: '',
         password: ''
@@ -84,16 +91,22 @@ export default {
   },
   methods: {
     async signin () {
-      this.isLoading = true
-      const res = await apiService.request(false, urls.SIGNINADMIN, this.input, 'POST')
-      const result = await res.json()
-      if (result.statuscode === 200) {
-        apiService.setToken('ADMIN_TOKEN', result.data.token)
-        this.isLoading = false
-        this.$router.push('/hospital')
-      } else if (result.statuscode === 400) {
-        this.isLoading = false
-        alert(result.message)
+      if (this.input.email === '' || this.input.password === '') {
+        this.errorMessage = true
+        this.errorText = 'Please enter your email address or mobile number.'
+      } else {
+        this.isLoading = true
+        const res = await apiService.request(false, urls.SIGNINADMIN, this.input, 'POST')
+        const result = await res.json()
+        if (result.statuscode === 200) {
+          apiService.setToken('ADMIN_TOKEN', result.data.token)
+          this.isLoading = false
+          this.$router.push('/hospital')
+        } else if (result.statuscode === 400) {
+          this.isLoading = false
+          this.errorMessage = true
+          this.errorText = result.message
+        }
       }
     },
     showPassword () {

@@ -20,6 +20,12 @@
                   <div class="row align-items-center">
                     <div class="col">
                       <!-- Title -->
+                      <div v-if="updatedHospital" class="alert alert-light mt-2" role="alert">
+                            Hospital Updated Successfully....
+                        </div>
+                        <div v-if="addedHospital" class="alert alert-light mt-2" role="alert">
+                            Hospital Added Successfully....
+                        </div>
                       <h1 class="header-title">
                         Hospital
                       </h1>
@@ -68,7 +74,7 @@
                     <th scope="row">
                       {{ responseData.hospitalID }}
                     </th>
-                    <td>{{ responseData.name }}</td>
+                    <td>{{ responseData.name | Upper }}</td>
                     <td v-if="responseData.address">
                       {{ responseData.address.state }}
                     </td>
@@ -81,7 +87,7 @@
                       </button>
                     </th>
                     <th>
-                      <button type="button" class="btn btn-lg btn-block btn-primary" @click="edit(responseData)">
+                      <button type="button" class="btn btn-lg btn-block btn-primary" @click="edit(responseData, 'hospital')">
                         Edit
                       </button>
                     </th>
@@ -113,10 +119,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Sidebar from '../components/Sidebar'
 import apiService from '../api/apiservice'
 import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
 export default {
   components: {
     Sidebar
@@ -131,6 +137,15 @@ export default {
   computed: {
     hospitalResponseDatas () {
       return this.responseDatas.filter(responseData => (responseData.category === 'HOSPITAL'))
+    },
+    ...mapState([
+      'updatedHospital',
+      'addedHospital'
+    ])
+  },
+  filters: {
+    Upper (value) {
+      return value.toUpperCase()
     }
   },
   async mounted () {
@@ -172,9 +187,10 @@ export default {
         this.$router.push('/details')
       }
     },
-    edit (getData) {
+    edit (getData, facility) {
       const storeObj = {}
       storeObj._id = getData._id
+      storeObj.facility = facility
       this.$store.commit('saveHospitalData', storeObj)
       if (this.$store.state.hospitalInitData.hospitalID !== '') {
         this.$router.push('/updatehospital')

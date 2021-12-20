@@ -19,7 +19,7 @@
                 <div class="header-body">
                   <div class="row align-items-center">
                     <div class="col">
-                      <!-- Title -->
+                        <!-- Title -->
                       <h1 class="header-title">
                         Laboratory
                       </h1>
@@ -113,7 +113,6 @@
 import Hspacesidebar from '~/components/Hspacesidebar'
 import apiService from '~/api/apiservice'
 import urls from '~/api/apiUrl'
-import '~/assets/css/theme-dark.min.css'
 export default {
   components: {
     Hspacesidebar

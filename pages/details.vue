@@ -140,7 +140,6 @@ export default {
   },
   filters: {
     capitalize (value) {
-      value = value.toString()
       return value.toUpperCase()
     }
   },

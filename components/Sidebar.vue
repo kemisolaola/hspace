@@ -26,7 +26,7 @@
     <div id="sidebarCollapse" :class="{ 'show': show }" class="collapse navbar-collapse">
       <!-- Navigation -->
       <ul style="color: #013c78" class="navbar-nav">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <nuxt-link
             to="/addadmin"
             class="nav-link"
@@ -34,7 +34,7 @@
           >
             <i class="fe fe-home" /> Add Admin
           </nuxt-link>
-        </li>
+        </li> -->
         <li class="nav-item">
           <nuxt-link
             to="/addhospital"

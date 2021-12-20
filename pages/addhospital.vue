@@ -17,8 +17,12 @@
               <!-- Header -->
               <div class="header mt-md-5">
                 <div class="header-body">
+                  <!-- / lent of flare 20 with 48 lent of top 11.5 -->
                   <div class="row align-items-center">
                     <div class="col">
+                      <div v-if="errorMessage" class="alert alert-light mt-2" role="alert">
+                            Ensure all field are filled.
+                        </div>
                       <!-- Pretitle -->
                       <h6 class="header-pretitle">
                         Add
@@ -160,6 +164,7 @@
                         type="number"
                         class="form-select form-control"
                         aria-label="Default select example"
+                        required
                       >
                     </div>
                   </div>
@@ -176,6 +181,7 @@
                         type="number"
                         class="form-select form-control"
                         aria-label="Default select example"
+                        required
                       >
                     </div>
                   </div>
@@ -229,6 +235,9 @@
                   </div>
                 </div> <!-- / .row -->
                 <!-- Button -->
+                <small v-if="errorMessage" class="text-center" style="color:red">
+              {{ errorText }}
+            </small>
                 <button type="button" class="btn btn-lg btn-block btn-secondary" @click="addServices()">
                   Add More Services
                 </button>
@@ -253,16 +262,18 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import Sidebar from '../components/Sidebar.vue'
 import apiService from '../api/apiservice'
 import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
 export default {
   components: {
     Sidebar
   },
   data () {
     return {
+      errorMessage: false,
+      errorText: 'Ensure all fields are filled.',
       image: '',
       isLoading: false,
       input: {
@@ -286,11 +297,27 @@ export default {
       aavilableBedSpaces: ''
     }
   },
+  computed: {
+    ...mapState([
+      'addedHospital'
+    ])
+  },
   mounted () {
     this.servicesOption.push('')
     this.imagesOption.push('')
   },
   methods: {
+    ...mapActions([
+      'showAdd'
+    ]),
+    toggleAdd (boolean) {
+      this.showAdd(boolean)
+    },
+    settimeout (setcondition) {
+      setTimeout(() => {
+        this.toggleAdd(setcondition)
+      }, 6000)
+    },
     addServices () {
       this.servicesOption.push('')
     },
@@ -326,10 +353,13 @@ export default {
       const res = await apiService.request(true, urls.ADDHOSPITAL, this.input, 'POST', 'ADMIN_TOKEN')
       const result = await res.json()
       if (result.statuscode === 200) {
+        this.toggleAdd(true)
+        this.settimeout(false)
+        this.isLoading = false
         this.$router.push('/hospital')
       } else if (result.statuscode === 400) {
         this.isLoading = false
-        alert(result.message)
+        this.errorMessage = true
       }
     }
   }

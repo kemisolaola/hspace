@@ -7,7 +7,7 @@
         <div class="mb-7 logo-image text-center">
           <img class="justify-content-center" width="200px" height="60px" src="Hspace.png">
         </div>
-        <h1 class="display-4 text-center">Reset Your Password Succesful</h1>
+        <h1 class="display-4 text-center">Reset Password Succesful</h1>
 <div class="text-center">
             <small class="text-muted text-center">
               Your password has been reset <nuxt-link to="/signinadmin">Sign In</nuxt-link>.
@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import '../assets/css/theme-dark.min.css'
 export default {
   data () {
     return {

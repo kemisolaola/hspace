@@ -21,6 +21,12 @@
                 <div class="header-body">
                   <div class="row align-items-center">
                     <div class="col">
+                       <div v-if="updatedHospital" class="alert alert-light mt-2" role="alert">
+                            Pharmacy Updated Successfully....
+                        </div>
+                        <div v-if="addedPharm" class="alert alert-light mt-2" role="alert">
+                            Pharmacy Added Successfully....
+                        </div>
                       <h1 class="header-title">
                         Pharmacy
                       </h1>
@@ -81,7 +87,7 @@
                       </button>
                     </th>
                     <th>
-                      <button type="button" class="btn btn-lg btn-block btn-primary" @click="update(responseData)">
+                      <button type="button" class="btn btn-lg btn-block btn-primary" @click="update(responseData, 'pharmacy')">
                         Edit
                       </button>
                     </th>
@@ -112,10 +118,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Sidebar from '../components/Sidebar'
 import apiService from '../api/apiservice'
 import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
 export default {
   components: {
     Sidebar
@@ -130,7 +136,11 @@ export default {
   computed: {
     pharmResponseDatas () {
       return this.responseDatas.filter(responseData => (responseData.category === 'PHARMACY'))
-    }
+    },
+    ...mapState([
+      'updatedHospital',
+      'addedPharm'
+    ])
   },
   async mounted () {
     this.loader = true
@@ -156,18 +166,10 @@ export default {
         this.$router.push('/details')
       }
     },
-    update (getData) {
+    update (getData, facility) {
       const storeObj = {}
       storeObj._id = getData._id
-      storeObj.address = getData.address
-      storeObj.services = getData.services
-      storeObj.bedSpaces = getData.bedSpaces
-      storeObj.website = getData.website
-      storeObj.category = getData.category
-      storeObj.galleryImages = getData.galleryImages
-      storeObj.parentHospital = getData.parentHospital
-      storeObj.openingHours = getData.openingHours
-      storeObj.phone = getData.phone
+      storeObj.facility = facility
       this.$store.commit('saveHospitalData', storeObj)
       if (this.$store.state.hospitalInitData.hospitalID !== '') {
         this.$router.push('/updatehospital')

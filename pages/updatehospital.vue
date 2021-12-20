@@ -43,6 +43,9 @@
                 </div> <!-- / .row -->
                 <div class="row">
                   <div class="col-12">
+                   <div v-if="errorMessage" class="alert alert-light mt-2" role="alert">
+                            {{errorText}}
+                        </div>
                     <!-- Hospital name name -->
                     <div class="form-group">
                       <!-- Label -->
@@ -159,12 +162,16 @@
                       <label>
                         Parent Hospital
                       </label>
-                      <select v-model="input.parentHospital" class="form-select form-control" style="width: 100%; height: 35px" aria-label="Default select example">
+                      <select
+                       v-model="input.parentHospital"
+                      class="form-select form-control"
+                       style="width: 100%; height: 35px"
+                        aria-label="Default select example">
                         <option selected>
                           Open this select menu
                         </option>
                         <option v-for="(name, index) in responseDatas" :key="index" :value="name._id">
-                          {{ name.name }}
+                          {{ name.name | Upper  }}
                         </option>
                       </select>
                     </div>
@@ -227,18 +234,21 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import Sidebar from '../components/Sidebar'
 import apiService from '../api/apiservice'
 import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
 export default {
   components: {
     Sidebar
   },
   data () {
     return {
+      errorMessage: false,
+      errorText: '',
       tokenKey: '',
       responseDatas: [],
+      facility: this.$store.state.hospitalInitData.facility,
       hospital: this.$store.state.hospitalInitData._id,
       input: [],
       city: '',
@@ -250,6 +260,16 @@ export default {
       imagesurl: '',
       address: {}
     }
+  },
+  filters: {
+    Upper (value) {
+      return value.toUpperCase()
+    }
+  },
+  computed: {
+    ...mapState([
+      'updatedHospital'
+    ])
   },
   // created () {
   //   this.servicesOption.push('')
@@ -271,6 +291,17 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'showUpdate'
+    ]),
+    toggleUpdate (boolean) {
+      this.showUpdate(boolean)
+    },
+    settimeout (setcondition) {
+      setTimeout(() => {
+        this.toggleUpdate(setcondition)
+      }, 6000)
+    },
     addServices () {
       this.servicesOption.push('')
     },
@@ -310,11 +341,14 @@ export default {
       const result = await res.json()
       result.data.address = this.address
       if (result.statuscode === 200) {
+        this.toggleUpdate(true)
+        this.settimeout(false)
         this.isLoading = false
-        this.$router.push('/hospital')
+        this.$router.push('/' + this.facility)
       } else if (result.statuscode === 400) {
         this.isLoading = false
-        alert(result.message)
+        this.errorMessage = true
+        this.errorText = result.message
       }
     }
   }

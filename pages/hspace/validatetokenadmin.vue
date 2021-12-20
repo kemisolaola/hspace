@@ -4,12 +4,12 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-md-5 col-xl-4 my-5">
-        <div class="mb-7 logo-image text-center">
+        <div class="mb-5 logo-image text-center">
           <img class="justify-content-center" width="200px" height="60px" src="/Hspace.png">
         </div>
-        <h1 class="display-4 text-center mb-3">
-          Validate Token
-        </h1>
+       <h2 class="text-center mb-3">
+          We sent a code to your email
+        </h2>
         <!-- Form -->
         <form>
           <!-- Email address -->
@@ -18,10 +18,21 @@
             <label>Token</label>
             <!-- Input -->
             <input v-model="input.token" type="email" class="form-control" placeholder="token">
+                      <small v-if="errorMessage" class="text-center" style="color:red">
+              {{ errorText }}
+            </small>
+            <small v-if="errormessage" class="text-center" style="color:red">
+              {{ errorText }}
+            </small>
+            </div>
+            <div class="text-left mb-1">
+            <small class=" text-left"  >
+              <nuxt-link to="/hspace/resetpasswordadminreq" style="color: #013c78;">Resend Token</nuxt-link>.
+            </small>
           </div>
           <!-- Password -->
           <!-- Submit -->
-          <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="validate (input.token)">
+          <button v-if="!isLoading" type="submit" class="btn btn-lg btn-block btn-primary mb-3" @click="validate (input.token)">
             Validate Token
           </button>
           <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3">
@@ -38,35 +49,40 @@
 <script>
 import apiService from '~/api/apiservice'
 import urls from '~/api/apiUrl'
-import '~/assets/css/theme-dark.min.css'
 
 export default {
   data () {
     return {
+      errorText: '',
+      errorMessage: false,
+      errormessage: false,
       input: {
         token: ''
       },
       isLoading: false
     }
   },
-  mounted () {
-    alert('Hello! Password Reset Token sent to your registered email, Kindly use this token')
-  },
   methods: {
     async validate (token) {
-      let storeToken = ''
-      storeToken = token
-      this.$store.commit('saveSAToken', storeToken)
-      this.isLoading = true
-      const res = await apiService.request(true, urls.VALIDATETOKENSUPERADMIN, this.input, 'POST')
-      const result = await res.json()
-      console.log('tojen', this.$store.state.sAdmintokenData)
-      if (result.statuscode === 200 && this.$store.state.sAdmintokenData !== '') {
-        this.isLoading = false
-        this.$router.push('/hspace/resetpasswordadmin')
-      } else if (result.statuscode === 400) {
-        this.isLoading = false
-        alert(result.message)
+      if (this.input.token === '') {
+        this.errorMessage = true
+        this.errorText = 'Please enter token sent to your email.'
+      } else {
+        let storeToken = ''
+        storeToken = token
+        this.$store.commit('saveSAToken', storeToken)
+        this.isLoading = true
+        const res = await apiService.request(true, urls.VALIDATETOKENSUPERADMIN, this.input, 'POST')
+        const result = await res.json()
+        if (result.statuscode === 200 && this.$store.state.AdmintokenData !== '') {
+          this.isLoading = false
+          this.$router.push('/hspace/resetpasswordadmin')
+        } else if (result.statuscode === 400) {
+          this.isLoading = false
+          this.errorMessage = false
+          this.errormessage = true
+          this.errorText = 'Token does not exist or is expired'
+        }
       }
     }
   }

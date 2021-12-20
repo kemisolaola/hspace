@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-md-5 col-xl-4 my-5">
-        <div class="mb-7 logo-image text-center">
+        <div class="mb-5 logo-image text-center">
           <img class="justify-content-center" width="200px" height="60px" src="Hspace.png">
         </div>
         <h1 class="display-4 text-center mb-3">
@@ -15,20 +15,31 @@
           <!-- Email address -->
           <div class="form-group">
             <!-- Label -->
-            <label>Email Address</label>
+            <label>Email</label>
             <!-- Input -->
-            <input v-model="input.email" type="email" class="form-control" placeholder="name@address.com">
+            <input
+            required
+             v-model="input.email"
+              type="email"
+               class="form-control"
+                placeholder="name@address.com">
+            <small v-if="errorMessage" class="text-center" style="color:red">
+           {{errorText}} Try again.
+           </small>
+            <small v-if="errormessage" class="text-center" style="color:red">
+              Something unexpected happened. Please try again.
+            </small>
           </div>
           <!-- Password -->
           <!-- Submit -->
-          <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="reset()">
+          <button v-if="!isLoading" type="submit" class="btn btn-lg btn-block btn-primary mb-3" @click="reset()">
             Reset
           </button>
           <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
             Reset
           </button>
-          <!-- Link -->
+            <!-- Link -->
         </form>
       </div>
     </div> <!-- / .row -->
@@ -38,11 +49,13 @@
 <script>
 import apiService from '../api/apiservice'
 import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
 
 export default {
   data () {
     return {
+      errormessage: false,
+      errorMessage: false,
+      errorText: '',
       input: {
         email: ''
       },
@@ -51,15 +64,21 @@ export default {
   },
   methods: {
     async reset () {
-      this.isLoading = true
-      const res = await apiService.request(true, urls.RESETPASSWORDREQADMIN, this.input, 'POST')
-      const result = await res.json()
-      if (result.statuscode === 200) {
-        this.isLoading = false
-        this.$router.push('/validatetokenadmin')
-      } else if (result.statuscode === 400) {
-        alert(result.message)
-        this.isLoading = false
+      if (this.input.email === '') {
+        this.errorMessage = true
+        this.errorText = 'Please enter your email address.'
+      } else {
+        this.isLoading = true
+        const res = await apiService.request(true, urls.RESETPASSWORDREQADMIN, this.input, 'POST')
+        const result = await res.json()
+        if (result.statuscode === 200) {
+          this.$router.push('/validatetokenadmin')
+          this.isLoading = false
+        } else if (result.statuscode === 400) {
+          this.errormessage = true
+          this.errorText = result.message
+          this.isLoading = false
+        }
       }
     }
   }

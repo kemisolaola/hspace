@@ -38,6 +38,7 @@ const request = function (hasToken = false, url, requestBody, method, tokenKey =
   } else {
     return fetch(postUrl, {
       method,
+      mode: 'cors',
       headers: headerDetails,
       body: JSON.stringify(requestBody)
     })

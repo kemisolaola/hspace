@@ -101,7 +101,6 @@
 import Sidebar from '../components/Sidebar'
 import apiService from '../api/apiservice'
 import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
 export default {
   components: {
     Sidebar

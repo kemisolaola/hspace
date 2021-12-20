@@ -55,7 +55,12 @@
                       </label>
 
                       <!-- Input -->
-                      <input v-model="input.name" required type="text" class="form-control">
+                      <input
+                       v-model="input.name"
+                        required
+                         type="text"
+                       @input="input.name=$event.target.value.toUpperCase()"
+                        class="form-control">
                     </div>
                   </div>
                   <div class="col-12 col-md-6">
@@ -159,6 +164,7 @@
                       <input
                         v-model="input.bedSpaces"
                         class="form-select form-control"
+                        type = "number"
                         aria-label="Default select example"
                       >
                     </div>
@@ -173,6 +179,7 @@
                       <!-- Input -->
                       <input
                         v-model="input.availableBedSpaces"
+                        type='number'
                         class="form-select form-control"
                         aria-label="Default select example"
                       >
@@ -204,12 +211,16 @@
                         Parent Hospital
                       </label>
                       <!-- Input -->
-                      <select v-model="input.parentHospital" class="form-select form-control" style="width: 100%; height: 35px" aria-label="Default select example">
+                      <select
+                       v-model="input.parentHospital"
+                        class="form-select form-control"
+                         style="width: 100%; height: 35px"
+                          aria-label="Default select example">
                         <option selected>
                           Open this select menu
                         </option>
                         <option v-for="(name, index) in responseDatas" :key="index" :value="name._id">
-                          {{ name.name }}
+                          {{ name.name | Upper }}
                         </option>
                       </select>
                     </div>
@@ -259,7 +270,7 @@
                 <button type="button" class="btn btn-lg btn-block btn-secondary" @click="addImages()">
                   Add More Images
                 </button>
-                <button v-if="!isLoading" type="submit" class="btn btn-lg btn-block btn-primary mb-3" @click="addHospital()">
+                <button v-if="!isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3" @click="addHospital()">
                   Add Hospital
                 </button>
                 <button v-if="isLoading" type="button" class="btn btn-lg btn-block btn-primary mb-3">
@@ -277,16 +288,18 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import Sidebar from '../components/Sidebar.vue'
 import apiService from '../api/apiservice'
 import urls from '../api/apiUrl'
-import '../assets/css/theme-dark.min.css'
 export default {
   components: {
     Sidebar
   },
   data () {
     return {
+      errorMessage: false,
+      errorText: 'Ensure all fields are filled.',
       image: '',
       responseDatas: [],
       isLoading: false,
@@ -312,6 +325,16 @@ export default {
       parentHospital: ''
     }
   },
+  filters: {
+    Upper (value) {
+      return value.toUpperCase()
+    }
+  },
+  computed: {
+    ...mapState([
+      'addedHospital'
+    ])
+  },
   async mounted () {
     this.servicesOption.push('')
     this.imagesOption.push('')
@@ -325,6 +348,17 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'showAdd'
+    ]),
+    toggleAdd (boolean) {
+      this.showAdd(boolean)
+    },
+    settimeout (setcondition) {
+      setTimeout(() => {
+        this.toggleAdd(setcondition)
+      }, 6000)
+    },
     addServices () {
       this.servicesOption.push('')
     },
@@ -354,16 +388,34 @@ export default {
       // this.input.galleryImages.push(...imageUrl)
       this.input.galleryImages.push(imageUrl)
     },
+    // async addHospital () {
+    //   this.isLoading = true
+    //   this.input.services = this.servicesOption
+    //   const res = await apiService.request(true, urls.ADDHOSPITAL, this.input, 'POST', 'ADMIN_TOKEN')
+    //   const result = await res.json()
+    //   if (result.statuscode === 200) {
+    //     this.isLoading = false
+    //     console.log('clkwnbciw')
+    //     this.$router.push('/hospital')
+    //   } else if (result.statuscode === 400) {
+    //     this.isLoading = false
+    //     alert(result.message)
+    //   }
+    // }
     async addHospital () {
       this.isLoading = true
       this.input.services = this.servicesOption
-      const res = await apiService.request(true, urls.ADDHOSPITALBRANCH, this.input, 'POST')
+      const res = await apiService.request(true, urls.ADDHOSPITAL, this.input, 'POST', 'ADMIN_TOKEN')
       const result = await res.json()
       if (result.statuscode === 200) {
+        this.toggleAdd(true)
+        this.settimeout(false)
+        this.isLoading = false
         this.$router.push('/hospital')
       } else if (result.statuscode === 400) {
+        console.log('error')
         this.isLoading = false
-        alert(result.message)
+        this.errorMessage = true
       }
     }
   }
